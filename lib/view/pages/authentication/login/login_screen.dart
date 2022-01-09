@@ -22,7 +22,6 @@ class LoginScreen extends StatelessWidget {
       body: Background(
         child: SingleChildScrollView(
           child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
             key: _formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
