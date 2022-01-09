@@ -1,6 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:todo_app/domain/auth_repository/src/auth_api_client.dart';
 import 'package:todo_app/view/pages/authentication/login/login_screen.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/background.dart';
 import 'package:todo_app/view/widgets/components/already_have_an_account_acheck.dart';
@@ -29,7 +30,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.always,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -66,13 +66,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 RoundedButton(
                   text: "SIGNUP",
-                  press: () {
+                  press: () async {
                     if (_formKey.currentState != null &&
                         _formKey.currentState!.validate()) {
-                      print("Sign Up Validated");
-                    } else {
-                      print("Sign Up Failure");
-                    }
+                      bool result = await AuthApiClient().register(
+                        usernameController.text,
+                        emailController.text,
+                        passwordController.text,
+                      );
+                      if (result)
+                        print('Navigate to Home Screen');
+                      else
+                        print('Show Toast for error');
+                    } else {}
                   },
                 ),
                 SizedBox(height: size.height * 0.03),
