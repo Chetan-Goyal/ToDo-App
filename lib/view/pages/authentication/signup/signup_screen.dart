@@ -74,10 +74,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         emailController.text,
                         passwordController.text,
                       );
-                      if (result)
+                      if (result) {
                         print('Navigate to Home Screen');
-                      else
+                      } else {
                         print('Show Toast for error');
+                      }
                     } else {}
                   },
                 ),

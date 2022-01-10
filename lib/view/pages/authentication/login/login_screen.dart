@@ -61,10 +61,11 @@ class LoginScreen extends StatelessWidget {
                         usernameController.text,
                         passwordController.text,
                       );
-                      if (result)
+                      if (result) {
                         print('Navigate to Home Screen');
-                      else
+                      } else {
                         print('Show Toast for error');
+                      }
                     } else {}
                   },
                 ),
