@@ -36,7 +36,7 @@ class OnboardingScreen extends StatelessWidget {
               PageViewModel(
                 title: 'Easy to use',
                 image: Image.asset(
-                  "assets/images/onboarding/3-easy.jpg",
+                  "assets/images/onboarding/3-easy.png",
                   width: size.width,
                 ),
                 body:
