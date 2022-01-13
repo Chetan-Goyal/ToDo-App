@@ -4,10 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/domain/auth_repository/src/auth_api_client.dart';
 import 'package:todo_app/view/pages/authentication/login/login_screen.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/background.dart';
-import 'package:todo_app/view/widgets/components/already_have_an_account_acheck.dart';
-import 'package:todo_app/view/widgets/components/rounded_button.dart';
-import 'package:todo_app/view/widgets/components/rounded_input_field.dart';
-import 'package:todo_app/view/widgets/components/rounded_password_field.dart';
+import 'package:todo_app/view/widgets/already_have_an_account_acheck.dart';
+import 'package:todo_app/view/widgets/rounded_button.dart';
+import 'package:todo_app/view/widgets/rounded_input_field.dart';
+import 'package:todo_app/view/widgets/rounded_password_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -88,10 +88,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   press: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LoginScreen();
-                        },
+                      PageRouteBuilder(
+                        pageBuilder: (c, a1, a2) => LoginScreen(),
+                        transitionsBuilder: (c, anim, a2, child) =>
+                            FadeTransition(opacity: anim, child: child),
+                        transitionDuration: const Duration(milliseconds: 200),
                       ),
                     );
                   },
