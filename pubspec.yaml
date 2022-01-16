@@ -28,6 +28,7 @@ dependencies:
   # Utils
   email_validator: ^2.0.1
   freezed_annotation: ^1.1.0
+  json_annotation: ^4.4.0
 
 dev_dependencies:
   flutter_test:

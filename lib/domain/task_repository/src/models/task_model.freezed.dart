@@ -23,7 +23,7 @@ class _$TaskModelTearOff {
   const _$TaskModelTearOff();
 
   _TaskModel call(
-      {required String id,
+      {@JsonKey(name: '_id') required String? id,
       required String name,
       required bool completed,
       required String userId}) {
@@ -45,7 +45,8 @@ const $TaskModel = _$TaskModelTearOff();
 
 /// @nodoc
 mixin _$TaskModel {
-  String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: '_id')
+  String? get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
@@ -60,7 +61,11 @@ mixin _$TaskModel {
 abstract class $TaskModelCopyWith<$Res> {
   factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
       _$TaskModelCopyWithImpl<$Res>;
-  $Res call({String id, String name, bool completed, String userId});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String name,
+      bool completed,
+      String userId});
 }
 
 /// @nodoc
@@ -82,7 +87,7 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -105,7 +110,11 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
           _TaskModel value, $Res Function(_TaskModel) then) =
       __$TaskModelCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String name, bool completed, String userId});
+  $Res call(
+      {@JsonKey(name: '_id') String? id,
+      String name,
+      bool completed,
+      String userId});
 }
 
 /// @nodoc
@@ -128,7 +137,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -149,7 +158,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_TaskModel implements _TaskModel {
   const _$_TaskModel(
-      {required this.id,
+      {@JsonKey(name: '_id') required this.id,
       required this.name,
       required this.completed,
       required this.userId});
@@ -158,7 +167,8 @@ class _$_TaskModel implements _TaskModel {
       _$$_TaskModelFromJson(json);
 
   @override
-  final String id;
+  @JsonKey(name: '_id')
+  final String? id;
   @override
   final String name;
   @override
@@ -203,7 +213,7 @@ class _$_TaskModel implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   const factory _TaskModel(
-      {required String id,
+      {@JsonKey(name: '_id') required String? id,
       required String name,
       required bool completed,
       required String userId}) = _$_TaskModel;
@@ -212,7 +222,8 @@ abstract class _TaskModel implements TaskModel {
       _$_TaskModel.fromJson;
 
   @override
-  String get id;
+  @JsonKey(name: '_id')
+  String? get id;
   @override
   String get name;
   @override

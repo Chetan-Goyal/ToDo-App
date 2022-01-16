@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:todo_app/domain/task_repository/src/task_api_client.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -9,8 +9,9 @@ class HomeScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         body: FutureBuilder(
-            future: const FlutterSecureStorage().read(key: 'accessToken'),
+            future: TaskApiClient().getTasks(),
             builder: (context, snapshot) {
+              print(snapshot.data);
               if (!snapshot.hasData) return const Text("Home Screen");
               return Text(snapshot.data.toString());
             }),

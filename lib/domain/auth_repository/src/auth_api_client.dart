@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:todo_app/config/dio_config.dart';
 import 'package:todo_app/domain/auth_repository/auth_repository.dart';
@@ -18,6 +19,8 @@ class AuthApiClient implements AuthRepository {
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.
+      debugPrintStack(stackTrace: e.stackTrace);
+
       if (e.response != null) {
         print(e.response!.data);
         print(e.response!.headers);
@@ -46,6 +49,8 @@ class AuthApiClient implements AuthRepository {
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx and is also not 304.
+      debugPrintStack(stackTrace: e.stackTrace);
+
       if (e.response != null) {
         print(e.response!.data);
         print(e.response!.headers);

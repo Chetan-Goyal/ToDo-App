@@ -7,7 +7,7 @@ part of 'task_model.dart';
 // **************************************************************************
 
 _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
-      id: json['id'] as String,
+      id: json['_id'] as String?,
       name: json['name'] as String,
       completed: json['completed'] as bool,
       userId: json['userId'] as String,
@@ -15,7 +15,7 @@ _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
 
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      '_id': instance.id,
       'name': instance.name,
       'completed': instance.completed,
       'userId': instance.userId,
