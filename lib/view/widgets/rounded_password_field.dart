@@ -23,6 +23,8 @@ class _RoundedPasswordFieldState extends State<RoundedPasswordField> {
           if (password == null) return 'Please Enter a valid password!!!';
 
           if (password.length < 6) return 'Atleast 6 characters';
+
+          return null;
         },
         obscureText: _obscuredPass,
         controller: widget.controller,
