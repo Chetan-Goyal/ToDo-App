@@ -73,4 +73,33 @@ class AuthApiClient implements AuthRepository {
 
     return false;
   }
+
+  @override
+  Future<bool> validateToken(String token) async {
+    Response response;
+    try {
+      response = await dioConfig().request(
+        "$authEndpoint/validate",
+        data: {"token": token},
+        options: Options(method: 'POST'),
+      );
+    } on DioError catch (e) {
+      // The request was made and the server responded with a status code
+      // that falls out of the range of 2xx and is also not 304.
+      debugPrintStack(stackTrace: e.stackTrace);
+
+      if (e.response != null) {
+        print(e.response!.data);
+        print(e.response!.headers);
+        print(e.response!.requestOptions);
+      } else {
+        // Something happened in setting up or sending the request that triggered an Error
+        print(e.requestOptions);
+        print(e.message);
+      }
+      return false;
+    }
+    if (response.statusCode == 200) return true;
+    return false;
+  }
 }
