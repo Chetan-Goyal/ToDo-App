@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/constants.dart';
+import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
 
 class ExploreNowButton extends StatelessWidget {

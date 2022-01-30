@@ -14,6 +14,9 @@ dependencies:
   # State Management
   riverpod: ^1.0.3
 
+  # Dependency Injection
+  get_it: ^7.2.0
+
   # Data Management
   flutter_secure_storage: ^5.0.2
   shared_preferences: ^2.0.12

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/domain/auth_repository/src/auth_api_client.dart';
+import 'package:todo_app/config/locator.dart';
+import 'package:todo_app/domain/auth_repository/auth_repository.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
 import 'package:todo_app/view/pages/home/home_screen.dart';
 import 'package:todo_app/view/pages/onboarding/onboarding.dart';
@@ -48,7 +49,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
 
-    bool result = await AuthApiClient().validateToken(token!);
+    bool result = await locator.get<AuthRepository>().validateToken(token!);
 
     if(result)
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));

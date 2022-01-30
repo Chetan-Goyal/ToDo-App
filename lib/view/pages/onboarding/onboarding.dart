@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todo_app/constants.dart';
+import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
 import 'package:todo_app/view/pages/onboarding/widgets/explore_now_button.dart';
 
