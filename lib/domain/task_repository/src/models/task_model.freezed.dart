@@ -26,12 +26,14 @@ class _$TaskModelTearOff {
       {@JsonKey(name: '_id') required String? id,
       required String name,
       required bool completed,
-      required String userId}) {
+      required String userId,
+      required String category}) {
     return _TaskModel(
       id: id,
       name: name,
       completed: completed,
       userId: userId,
+      category: category,
     );
   }
 
@@ -50,6 +52,7 @@ mixin _$TaskModel {
   String get name => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -65,7 +68,8 @@ abstract class $TaskModelCopyWith<$Res> {
       {@JsonKey(name: '_id') String? id,
       String name,
       bool completed,
-      String userId});
+      String userId,
+      String category});
 }
 
 /// @nodoc
@@ -82,6 +86,7 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
     Object? name = freezed,
     Object? completed = freezed,
     Object? userId = freezed,
+    Object? category = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -100,6 +105,10 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -114,7 +123,8 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       {@JsonKey(name: '_id') String? id,
       String name,
       bool completed,
-      String userId});
+      String userId,
+      String category});
 }
 
 /// @nodoc
@@ -132,6 +142,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
     Object? name = freezed,
     Object? completed = freezed,
     Object? userId = freezed,
+    Object? category = freezed,
   }) {
     return _then(_TaskModel(
       id: id == freezed
@@ -150,6 +161,10 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -161,7 +176,8 @@ class _$_TaskModel implements _TaskModel {
       {@JsonKey(name: '_id') required this.id,
       required this.name,
       required this.completed,
-      required this.userId});
+      required this.userId,
+      required this.category});
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
@@ -175,10 +191,12 @@ class _$_TaskModel implements _TaskModel {
   final bool completed;
   @override
   final String userId;
+  @override
+  final String category;
 
   @override
   String toString() {
-    return 'TaskModel(id: $id, name: $name, completed: $completed, userId: $userId)';
+    return 'TaskModel(id: $id, name: $name, completed: $completed, userId: $userId, category: $category)';
   }
 
   @override
@@ -189,7 +207,8 @@ class _$_TaskModel implements _TaskModel {
             const DeepCollectionEquality().equals(other.id, id) &&
             const DeepCollectionEquality().equals(other.name, name) &&
             const DeepCollectionEquality().equals(other.completed, completed) &&
-            const DeepCollectionEquality().equals(other.userId, userId));
+            const DeepCollectionEquality().equals(other.userId, userId) &&
+            const DeepCollectionEquality().equals(other.category, category));
   }
 
   @override
@@ -198,7 +217,8 @@ class _$_TaskModel implements _TaskModel {
       const DeepCollectionEquality().hash(id),
       const DeepCollectionEquality().hash(name),
       const DeepCollectionEquality().hash(completed),
-      const DeepCollectionEquality().hash(userId));
+      const DeepCollectionEquality().hash(userId),
+      const DeepCollectionEquality().hash(category));
 
   @JsonKey(ignore: true)
   @override
@@ -216,7 +236,8 @@ abstract class _TaskModel implements TaskModel {
       {@JsonKey(name: '_id') required String? id,
       required String name,
       required bool completed,
-      required String userId}) = _$_TaskModel;
+      required String userId,
+      required String category}) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;
@@ -230,6 +251,8 @@ abstract class _TaskModel implements TaskModel {
   bool get completed;
   @override
   String get userId;
+  @override
+  String get category;
   @override
   @JsonKey(ignore: true)
   _$TaskModelCopyWith<_TaskModel> get copyWith =>

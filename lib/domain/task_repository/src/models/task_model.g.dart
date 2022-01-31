@@ -11,6 +11,7 @@ _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       name: json['name'] as String,
       completed: json['completed'] as bool,
       userId: json['userId'] as String,
+      category: json['category'] as String,
     );
 
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
@@ -19,4 +20,5 @@ Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
       'name': instance.name,
       'completed': instance.completed,
       'userId': instance.userId,
+      'category': instance.category,
     };

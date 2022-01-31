@@ -7,6 +7,6 @@ import 'package:todo_app/domain/task_repository/src/task_repository.dart';
 GetIt  get  locator => GetIt.instance;
 
 void setupDependencies() {
-  locator.registerSingleton<AuthRepository>(AuthApiClient());
-  locator.registerLazySingleton<TaskRepository>(( )=> TaskApiClient());
+  locator.registerLazySingleton<AuthRepository>(() => AuthApiClient());
+  locator.registerLazySingleton<TaskRepository>(() => TaskApiClient());
 }

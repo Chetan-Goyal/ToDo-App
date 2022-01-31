@@ -6,8 +6,6 @@ part 'task_model.g.dart';
 List<TaskModel> taskModelsFromJson(Map<String, dynamic> tasks) =>
     // ! Here, We can see an anomality when 'as List' is not specified
     (tasks['tasks'] as List).map((task) {
-      print(task);
-      print(TaskModel.fromJson(task));
       return TaskModel.fromJson(task);
     }).toList();
 
@@ -19,6 +17,7 @@ class TaskModel with _$TaskModel {
     required String name,
     required bool completed,
     required String userId,
+    required String category,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) =>

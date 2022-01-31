@@ -42,6 +42,7 @@ class TaskApiClient implements TaskRepository {
     Response response;
 
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+
     if (token == null) return [];
     try {
       response = await dioConfig().request(
