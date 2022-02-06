@@ -79,14 +79,28 @@ class HomeScreen extends StatelessWidget {
                     }
 
                     List<TaskModel> tasks = snapshot.data!;
-                    Set<String> categoriesSet = <String>{};
-                    for (var task in tasks) {
-                      print(task.runtimeType);
-                      print(task);
-                      categoriesSet.add(task.category);
+                    List<String> categories = <String>[];
+                    for (int i = 0; i < tasks.length; i++) {
+                      categories.add(tasks[i].category);
                     }
-                    List<String> categories = categoriesSet.toList();
-                    print(categories);
+                    tasks.map((e) {
+                      categories.add(e.category);
+                    }).toList();
+
+                    categories = categories.toSet().toList();
+
+                    List<Color> colours = [
+                      Colors.red,
+                      Colors.blue,
+                      Colors.purple,
+                      Colors.teal
+                    ];
+                    Map<String, Color> categoriesColors = {};
+
+                    print("Category: ${categories[0]}");
+                    for (int i = 0; i < categories.length; i++) {
+                      categoriesColors[categories[i]] = colours[i % 4];
+                    }
 
                     return Column(
                       mainAxisSize: MainAxisSize.min,
@@ -121,20 +135,33 @@ class HomeScreen extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(tasks
-                                                .where((element) =>
-                                                    element.category ==
-                                                    categories[index])
-                                                .length
-                                                .toString() +
-                                            " Tasks"),
-                                        SizedBox(height: 5),
-                                        Text(categories[index]),
+                                        Text(
+                                          tasks
+                                                  .where((element) =>
+                                                      element.category ==
+                                                      categories[index])
+                                                  .length
+                                                  .toString() +
+                                              " Tasks",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 12,
+                                              color: Color(0xFF9BA3C9)),
+                                        ),
+                                        SizedBox(height: 7),
+                                        Text(
+                                          categories[index],
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 21,
+                                              color: Color(0xFF333A63)),
+                                        ),
                                         SizedBox(height: 10),
-                                        Spacer(),
+                                        // Spacer(),
                                         LinearProgressIndicator(
-                                          color: Colors.pink,
-                                          backgroundColor: Colors.grey,
+                                          color: categoriesColors[
+                                              categories[index]],
+                                          backgroundColor: Color(0xFFE9EDFF),
                                           value: tasks
                                                   .where((element) =>
                                                       element.category ==
@@ -184,10 +211,16 @@ class HomeScreen extends StatelessWidget {
                                           tasks[index].completed
                                               ? Icons.check_circle
                                               : Icons.circle_outlined,
-                                          color: Colors.red,
+                                          color: categoriesColors[
+                                              tasks[index].category],
                                         ),
-                                        SizedBox(width: 15),
-                                        Text(tasks[index].name),
+                                        SizedBox(width: 25),
+                                        Text(
+                                          tasks[index].name,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        ),
                                       ],
                                     ),
                                     constraints: BoxConstraints.tight(
