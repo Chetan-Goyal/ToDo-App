@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/config/locator.dart';
 import 'package:todo_app/domain/task_repository/src/models/models.dart';
 import 'package:todo_app/domain/task_repository/src/task_repository.dart';
@@ -11,6 +12,7 @@ class HomeScreen extends StatelessWidget {
     Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: scaffoldColor,
         body: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -22,22 +24,52 @@ class HomeScreen extends StatelessWidget {
                 size: _size,
                 child: Row(
                   children: [
-                    Icon(Icons.menu, size: 0.09 * _size.width),
+                    Icon(
+                      Icons.menu,
+                      size: 0.09 * _size.width,
+                      color: lightGreyColor,
+                    ),
                     const Spacer(),
-                    Icon(Icons.search, size: 0.09 * _size.width),
+                    Icon(
+                      Icons.search,
+                      size: 0.09 * _size.width,
+                      color: lightGreyColor,
+                    ),
                     SizedBox(width: 0.05 * _size.width),
-                    Icon(Icons.notifications, size: 0.09 * _size.width),
+                    Icon(
+                      Icons.notifications,
+                      size: 0.09 * _size.width,
+                      color: lightGreyColor,
+                    ),
                   ],
                 ),
               ),
               SizedBox(height: 0.1 * _size.width),
               defaultPaddingWrapper(
                 size: _size,
-                child: const Text('What\'s up, Chetan!'),
+                child: Container(
+                  margin: EdgeInsets.only(right: 0.2 * _size.width),
+                  child: const FittedBox(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'What\'s up, Chetan!',
+                      style: TextStyle(
+                        fontSize: 96,
+                        fontWeight: FontWeight.bold,
+                        color: kPrimaryColor,
+                      ),
+                    ),
+                  ),
+                ),
               ),
               SizedBox(height: 0.11 * _size.width),
               defaultPaddingWrapper(
-                  size: _size, child: const Text('CATEGORIES')),
+                size: _size,
+                child: headingWrapper(
+                  title: 'CATEGORIES',
+                  margin: 0.6 * _size.width,
+                ),
+              ),
               FutureBuilder<List<TaskModel>>(
                   future: locator.get<TaskRepository>().getTasks(),
                   builder: (ctx, snapshot) {
@@ -46,8 +78,9 @@ class HomeScreen extends StatelessWidget {
                       return const CircularProgressIndicator();
                     }
 
+                    List<TaskModel> tasks = snapshot.data!;
                     Set<String> categories = <String>{};
-                    for (var task in snapshot.data!) {
+                    for (var task in tasks) {
                       print(task.runtimeType);
                       print(task);
                       categories.add(task.category);
@@ -70,7 +103,10 @@ class HomeScreen extends StatelessWidget {
                                 child: Container(
                                   constraints:
                                       BoxConstraints.tight(const Size(170, 90)),
-                                  color: Colors.yellow,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
                                 ),
                               );
                             },
@@ -80,7 +116,10 @@ class HomeScreen extends StatelessWidget {
                         SizedBox(height: 0.11 * _size.width),
                         defaultPaddingWrapper(
                           size: _size,
-                          child: Text('Today\'s Tasks'),
+                          child: headingWrapper(
+                            title: 'TODAY\'S TASKS',
+                            margin: 0.55 * _size.width,
+                          ),
                         ),
                         ListView.builder(
                           // scrollDirection: Axis.vertical,
@@ -93,13 +132,14 @@ class HomeScreen extends StatelessWidget {
                                 child: defaultPaddingWrapper(
                                   size: _size,
                                   child: Container(
+                                    child: Text(tasks[index].name),
                                     constraints: BoxConstraints.tight(
                                         const Size(170, 90)),
                                     color: Colors.yellow,
                                   ),
                                 ));
                           },
-                          itemCount: categories.length,
+                          itemCount: tasks.length,
                         ),
                       ],
                     );
@@ -118,6 +158,23 @@ class HomeScreen extends StatelessWidget {
       padding:
           EdgeInsets.only(left: 0.08 * size.width, right: 0.08 * size.width),
       child: child,
+    );
+  }
+
+  headingWrapper({required String title, required double margin}) {
+    return Padding(
+      padding: EdgeInsets.only(right: margin),
+      child: FittedBox(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          title,
+          style: const TextStyle(
+            color: lightGreyColor,
+            fontSize: 48,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+      ),
     );
   }
 }
