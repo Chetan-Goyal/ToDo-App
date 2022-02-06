@@ -79,12 +79,13 @@ class HomeScreen extends StatelessWidget {
                     }
 
                     List<TaskModel> tasks = snapshot.data!;
-                    Set<String> categories = <String>{};
+                    Set<String> categoriesSet = <String>{};
                     for (var task in tasks) {
                       print(task.runtimeType);
                       print(task);
-                      categories.add(task.category);
+                      categoriesSet.add(task.category);
                     }
+                    List<String> categories = categoriesSet.toList();
                     print(categories);
 
                     return Column(
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 90,
+                          height: 110,
                           child: ListView.builder(
                             shrinkWrap: true,
                             scrollDirection: Axis.horizontal,
@@ -101,11 +102,55 @@ class HomeScreen extends StatelessWidget {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  constraints:
-                                      BoxConstraints.tight(const Size(170, 90)),
+                                  constraints: BoxConstraints.tight(
+                                      const Size(200, 110)),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 10,
+                                      left: 20,
+                                      right: 10,
+                                      bottom: 10,
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(tasks
+                                                .where((element) =>
+                                                    element.category ==
+                                                    categories[index])
+                                                .length
+                                                .toString() +
+                                            " Tasks"),
+                                        SizedBox(height: 5),
+                                        Text(categories[index]),
+                                        SizedBox(height: 10),
+                                        Spacer(),
+                                        LinearProgressIndicator(
+                                          color: Colors.pink,
+                                          backgroundColor: Colors.grey,
+                                          value: tasks
+                                                  .where((element) =>
+                                                      element.category ==
+                                                      categories[index])
+                                                  .where((element) =>
+                                                      element.completed)
+                                                  .length /
+                                              tasks
+                                                  .where((element) =>
+                                                      element.category ==
+                                                      categories[index])
+                                                  .length,
+                                        ),
+                                        Spacer(),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );
@@ -132,10 +177,30 @@ class HomeScreen extends StatelessWidget {
                                 child: defaultPaddingWrapper(
                                   size: _size,
                                   child: Container(
-                                    child: Text(tasks[index].name),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 20),
+                                        Icon(
+                                          tasks[index].completed
+                                              ? Icons.check_circle
+                                              : Icons.circle_outlined,
+                                          color: Colors.red,
+                                        ),
+                                        SizedBox(width: 15),
+                                        Text(tasks[index].name),
+                                      ],
+                                    ),
                                     constraints: BoxConstraints.tight(
-                                        const Size(170, 90)),
-                                    color: Colors.yellow,
+                                      Size(
+                                        MediaQuery.of(context).size.width *
+                                            0.95,
+                                        60,
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
                                   ),
                                 ));
                           },
