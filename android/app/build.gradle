@@ -41,11 +41,13 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    // def minSdkVersion = localProperties.getProperty('flutter.minSdkVersion') ?: '19'
-    // def targetSdkVersion = localProperties.getProperty('flutter.targetSdkVersion') ?: '30'
+    // def minSdkVersion = '19'
+    // def targetSdkVersion = '30'
     defaultConfig {
-        minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger() //minSdkVersion.toInteger()
-        targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        // minSdkVersion localProperties.getProperty('flutter.minSdkVersion').toInteger() //minSdkVersion.toInteger()
+        // targetSdkVersion localProperties.getProperty('flutter.targetSdkVersion').toInteger()
+        minSdkVersion '19'.toInteger() //minSdkVersion.toInteger()
+        targetSdkVersion '30'.toInteger()
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
