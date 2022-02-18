@@ -143,25 +143,26 @@ class HomeScreen extends StatelessWidget {
                                                   .length
                                                   .toString() +
                                               " Tasks",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 12,
                                               color: Color(0xFF9BA3C9)),
                                         ),
-                                        SizedBox(height: 7),
+                                        const SizedBox(height: 7),
                                         Text(
                                           categories[index],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 21,
                                               color: Color(0xFF333A63)),
                                         ),
-                                        SizedBox(height: 10),
+                                        const SizedBox(height: 10),
                                         // Spacer(),
                                         LinearProgressIndicator(
                                           color: categoriesColors[
                                               categories[index]],
-                                          backgroundColor: Color(0xFFE9EDFF),
+                                          backgroundColor:
+                                              const Color(0xFFE9EDFF),
                                           value: tasks
                                                   .where((element) =>
                                                       element.category ==
@@ -175,7 +176,7 @@ class HomeScreen extends StatelessWidget {
                                                       categories[index])
                                                   .length,
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                       ],
                                     ),
                                   ),
@@ -206,7 +207,7 @@ class HomeScreen extends StatelessWidget {
                                   child: Container(
                                     child: Row(
                                       children: [
-                                        SizedBox(width: 20),
+                                        const SizedBox(width: 20),
                                         Icon(
                                           tasks[index].completed
                                               ? Icons.check_circle
@@ -214,10 +215,10 @@ class HomeScreen extends StatelessWidget {
                                           color: categoriesColors[
                                               tasks[index].category],
                                         ),
-                                        SizedBox(width: 25),
+                                        const SizedBox(width: 25),
                                         Text(
                                           tasks[index].name,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               fontWeight: FontWeight.w600),
                                         ),

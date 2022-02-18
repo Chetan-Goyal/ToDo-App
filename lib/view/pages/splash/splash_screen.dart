@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (token == null) {
-      Navigator.pushReplacement(
+      return Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (ctx) => const SignUpScreen(),
@@ -49,12 +49,14 @@ class _SplashScreenState extends State<SplashScreen> {
       );
     }
 
-    bool result = await locator.get<AuthRepository>().validateToken(token!);
+    bool result = await locator.get<AuthRepository>().validateToken(token);
 
-    if(result)
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => HomeScreen()));
-    else 
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (_)=> SignUpScreen()));
+    if (result)
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => HomeScreen()));
+    else
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (_) => SignUpScreen()));
   }
 
   @override
