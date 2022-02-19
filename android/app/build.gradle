@@ -44,10 +44,8 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion (localProperties.getProperty('flutter.minSdkVersion') ?: localMinSdkVersion).toInteger()
-        targetSdkVersion (localProperties.getProperty('flutter.targetSdkVersion') ?: localTargetSdkVersion).toInteger()
-        // minSdkVersion '19'.toInteger() //minSdkVersion.toInteger()
-        // targetSdkVersion '30'.toInteger()
+        minSdkVersion localMinSdkVersion.toInteger()
+        targetSdkVersion localTargetSdkVersion.toInteger()
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
