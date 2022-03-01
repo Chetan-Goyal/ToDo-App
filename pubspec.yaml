@@ -26,7 +26,7 @@ dependencies:
 
   # UI
   flutter_svg: ^1.0.0
-  introduction_screen: ^2.1.0
+  introduction_screen: ^3.0.0
 
   # Utils
   email_validator: ^2.0.1
