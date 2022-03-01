@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen> {
     bool? initialised = prefs.getBool('Initialised');
 
     if (initialised == null) {
-      Navigator.pushReplacement(
+      return Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (ctx) => const OnboardingScreen(),
@@ -51,12 +51,13 @@ class _SplashScreenState extends State<SplashScreen> {
 
     bool result = await locator.get<AuthRepository>().validateToken(token);
 
-    if (result)
+    if (result) {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => HomeScreen()));
-    else
+    } else {
       Navigator.pushReplacement(
           context, MaterialPageRoute(builder: (_) => SignUpScreen()));
+    }
   }
 
   @override

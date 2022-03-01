@@ -65,6 +65,7 @@ class TaskApiClient implements TaskRepository {
       response = await dioConfig().request(
         "$tasksEndpoint/tasks/${task.id}",
         data: task.toJson(),
+        // Todo: Check Delete Method for updateTask
         options: Options(method: 'DELETE'),
       );
     } on DioError catch (e) {
@@ -72,5 +73,36 @@ class TaskApiClient implements TaskRepository {
       return false;
     }
     return response.statusCode == 200;
+  }
+
+  @override
+  Future<bool> addTask(String name, String? category) async {
+    Response response;
+    try {
+      String? token =
+          await const FlutterSecureStorage().read(key: 'accessToken');
+
+      if (token == null) return false;
+
+      Map<String, String> body = {'name': name};
+      if (category != null) body['category'] = category;
+
+      print(token);
+      print("$tasksEndpoint/tasks");
+      print(body);
+
+      response = await dioConfig().request(
+        "$tasksEndpoint/tasks",
+        data: body,
+        options: Options(
+          headers: {'x-access-token': token, 'Accept': '*/*'},
+          method: 'POST',
+        ),
+      );
+    } on DioError catch (e) {
+      debugPrintStack(stackTrace: e.stackTrace);
+      return false;
+    }
+    return response.statusCode == 201;
   }
 }
