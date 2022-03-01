@@ -11,7 +11,7 @@ _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       name: json['name'] as String,
       completed: json['completed'] as bool,
       userId: json['userId'] as String,
-      category: (json['category'] ?? 'Default') as String,
+      category: json['category'] as String? ?? 'Default',
     );
 
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>

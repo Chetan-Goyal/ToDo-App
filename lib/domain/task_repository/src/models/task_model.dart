@@ -17,7 +17,8 @@ class TaskModel with _$TaskModel {
     required String name,
     required bool completed,
     required String userId,
-    required String category,
+    @Default('Default')
+        String category,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) =>

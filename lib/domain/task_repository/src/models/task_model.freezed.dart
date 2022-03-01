@@ -27,7 +27,7 @@ class _$TaskModelTearOff {
       required String name,
       required bool completed,
       required String userId,
-      required String category}) {
+      String category = 'Default'}) {
     return _TaskModel(
       id: id,
       name: name,
@@ -177,7 +177,7 @@ class _$_TaskModel implements _TaskModel {
       required this.name,
       required this.completed,
       required this.userId,
-      required this.category});
+      this.category = 'Default'});
 
   factory _$_TaskModel.fromJson(Map<String, dynamic> json) =>
       _$$_TaskModelFromJson(json);
@@ -191,6 +191,7 @@ class _$_TaskModel implements _TaskModel {
   final bool completed;
   @override
   final String userId;
+  @JsonKey()
   @override
   final String category;
 
@@ -237,7 +238,7 @@ abstract class _TaskModel implements TaskModel {
       required String name,
       required bool completed,
       required String userId,
-      required String category}) = _$_TaskModel;
+      String category}) = _$_TaskModel;
 
   factory _TaskModel.fromJson(Map<String, dynamic> json) =
       _$_TaskModel.fromJson;

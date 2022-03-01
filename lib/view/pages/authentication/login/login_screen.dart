@@ -47,6 +47,7 @@ class LoginScreen extends StatelessWidget {
                     if (username.length < 6) {
                       return "Invalid Username";
                     }
+                    return null;
                   },
                   hintText: "Your Username",
                 ),

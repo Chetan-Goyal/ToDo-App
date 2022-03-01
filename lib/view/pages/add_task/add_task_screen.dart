@@ -61,7 +61,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                       errorBorder: InputBorder.none,
                       disabledBorder: InputBorder.none,
                       contentPadding: EdgeInsets.only(
-                        // left: 15,
                         bottom: 11,
                         top: 11,
                         right: 15,
@@ -111,29 +110,12 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                             builder: (ctx) => AlertDialog(
                               title: const Text('Pick a color!'),
                               content: SingleChildScrollView(
-                                // child: ColorPicker(
-                                //   pickerColor: Colors.blue,
-                                //   onColorChanged: (_) {},
-                                // ),
-                                // Use Material color picker:
-                                //
-                                // child: MaterialPicker(
-                                //   pickerColor: Colors.blue,
-                                //   onColorChanged: (_) {},
-                                //   enableLabel: true, // only on portrait mode
-                                // ),
-                                //
-                                // Use Block color picker:
-                                //
                                 child: BlockPicker(
                                   pickerColor: Colors.blue,
-                                  onColorChanged: (_) {},
+                                  onColorChanged: (color) {
+                                    print('Selected Color: $color');
+                                  },
                                 ),
-                                //
-                                // child: MultipleChoiceBlockPicker(
-                                //   pickerColors: currentColors,
-                                //   onColorsChanged: changeColors,
-                                // ),
                               ),
                               actions: <Widget>[
                                 ElevatedButton(
