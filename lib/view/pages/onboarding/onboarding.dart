@@ -51,8 +51,8 @@ class OnboardingScreen extends StatelessWidget {
               )
             ],
             done: const FittedBox(child: Text('Explore')),
-            doneColor: kPrimaryColor,
-            color: kPrimaryColor,
+            // doneColor: kPrimaryColor,
+            // color: kPrimaryColor,
             onDone: () {
               prefs.data!.setBool('Initialised', true);
               Navigator.pushReplacement(
@@ -64,7 +64,7 @@ class OnboardingScreen extends StatelessWidget {
             next: const Text('Next'),
             skip: const Text('Skip'),
             showSkipButton: true,
-            skipFlex: 0,
+            skipOrBackFlex: 0,
             nextFlex: 0,
             dotsDecorator: getDotDecoration(),
           ),
@@ -78,7 +78,7 @@ class OnboardingScreen extends StatelessWidget {
       titleTextStyle:
           const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
       bodyTextStyle: const TextStyle(fontSize: 20),
-      descriptionPadding: const EdgeInsets.all(16).copyWith(bottom: 0),
+      bodyPadding: const EdgeInsets.all(16).copyWith(bottom: 0),
       imagePadding: const EdgeInsets.all(24),
     );
   }
