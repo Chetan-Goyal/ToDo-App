@@ -15,8 +15,9 @@ class OnboardingScreen extends StatelessWidget {
     return FutureBuilder<SharedPreferences>(
       future: SharedPreferences.getInstance(),
       builder: (_, prefs) {
-        if (prefs.connectionState == ConnectionState.waiting)
+        if (prefs.connectionState == ConnectionState.waiting) {
           return const Scaffold();
+        }
         if (prefs.data!.containsKey('Initialised')) return const SignUpScreen();
 
         return SafeArea(

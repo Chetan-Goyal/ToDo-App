@@ -15,9 +15,6 @@ class HomeScreen extends ConsumerWidget {
 
     return provider.when(
       initial: () {
-        WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
-          ref.read(tasksNotifierProvider.notifier).getTasks();
-        });
         return Container();
       },
       loading: (tasks) {

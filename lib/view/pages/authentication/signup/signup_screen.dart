@@ -50,6 +50,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (username.length < 6) {
                       return 'Username should be 6 or more characters';
                     }
+                    return null;
                   },
                 ),
                 RoundedInputField(
@@ -59,6 +60,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     if (!EmailValidator.validate(email ?? "")) {
                       return 'Invalid Email Address';
                     }
+                    return null;
                   },
                 ),
                 RoundedPasswordField(

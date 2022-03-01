@@ -6,7 +6,9 @@ import 'package:todo_app/domain/task_repository/task_repository.dart';
 part 'tasks_provider.freezed.dart';
 
 class TasksNotifier extends StateNotifier<TasksState> {
-  TasksNotifier() : super(const TasksState.initial());
+  TasksNotifier() : super(const TasksState.initial()) {
+    getTasks();
+  }
 
   final TaskRepository _taskRepository = GetIt.I.get<TaskRepository>();
 
