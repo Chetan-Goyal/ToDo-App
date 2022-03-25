@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (ctx) => const HomeScreen(),
+                            builder: (ctx) => HomeScreen(),
                           ),
                           (_) => true,
                         );
