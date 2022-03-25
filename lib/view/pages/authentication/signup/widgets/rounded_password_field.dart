@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/config/constants.dart';
-import 'package:todo_app/view/widgets/text_field_container.dart';
+import 'package:todo_app/view/pages/authentication/signup/widgets/text_field_container.dart';
 
 class RoundedPasswordField extends StatefulWidget {
   final TextEditingController controller;
