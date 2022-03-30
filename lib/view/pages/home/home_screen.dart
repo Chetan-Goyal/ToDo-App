@@ -56,8 +56,6 @@ class HomeScreen extends ConsumerWidget {
           angle: 0,
           // backgroundColor: Colors.grey,
           slideWidth: _size.width * 0.65,
-          shadowLayer1Color: Colors.green,
-          shadowLayer2Color: Colors.greenAccent,
           backgroundColor: const Color(0xFF0D2260),
           borderRadius: 50,
           mainScreenScale: 0.2,
@@ -94,15 +92,18 @@ class HomeScreen extends ConsumerWidget {
                         const Spacer(),
                         Align(
                           alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white),
-                              borderRadius: BorderRadius.circular(30),
-                            ),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
+                          child: InkWell(
+                            onTap: () => _drawerController.toggle?.call(),
+                            child: Container(
+                              padding: const EdgeInsets.all(12),
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -453,7 +454,7 @@ class DrawerTileWidget extends StatelessWidget {
       leading: Icon(item.icon, color: Colors.white),
       title: Text(item.title, style: const TextStyle(color: Colors.white)),
       horizontalTitleGap: 5,
-      onTap: () => null,
+      onTap: null,
     );
   }
 }
