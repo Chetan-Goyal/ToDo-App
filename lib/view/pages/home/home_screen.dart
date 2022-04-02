@@ -203,6 +203,8 @@ class HomeScreen extends ConsumerWidget {
                         physics: const BouncingScrollPhysics(),
                         shrinkWrap: true,
                         itemBuilder: (ctx, index) {
+                          print(tasks[index].deadline?.toLocal());
+
                           return Padding(
                               padding:
                                   const EdgeInsets.only(top: 10, bottom: 10),
