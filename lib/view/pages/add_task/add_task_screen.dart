@@ -5,6 +5,8 @@ import 'package:todo_app/domain/task_repository/src/task_api_client.dart';
 import 'package:todo_app/view/pages/add_task/widgets/date_picker.dart';
 import 'package:todo_app/utils/date_utils.dart';
 
+import 'widgets/icon_button.dart';
+
 class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({Key? key}) : super(key: key);
 
@@ -17,6 +19,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
 
   DateTime? dateTime;
   Color? color;
+  bool isImportant = false;
+  bool isReminderSet = false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +100,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 color: Colors.black,
                                 size: 25,
                               ),
-                              const SizedBox(width: 10),
+                              if (dateTime != null) const SizedBox(width: 10),
                               Text(formatDate(dateTime))
                             ],
                           ),
@@ -111,9 +115,11 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               title: const Text('Pick a color!'),
                               content: SingleChildScrollView(
                                 child: BlockPicker(
-                                  pickerColor: Colors.blue,
-                                  onColorChanged: (color) {
-                                    print('Selected Color: $color');
+                                  pickerColor: Colors.black,
+                                  onColorChanged: (_color) {
+                                    print('Selected color: $_color');
+                                    color = _color;
+                                    setState(() {});
                                   },
                                 ),
                               ),
@@ -137,13 +143,15 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                           ),
                           child: Stack(
                             alignment: Alignment.center,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.circle_outlined,
+                                color: color ?? Colors.black,
                                 size: 25,
                               ),
                               Icon(
                                 Icons.circle,
+                                color: color ?? Colors.black,
                                 size: 15,
                               ),
                             ],
@@ -155,17 +163,40 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ],
               ),
               Row(
+                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  Icon(Icons.create_new_folder_outlined),
-                  Icon(Icons.flag_outlined),
-                  Icon(Icons.nightlight_outlined),
+                children: [
+                  ToggleIconButton(
+                    icon: Icons.create_new_folder_outlined,
+                    callback: () {},
+                    isSelected: false,
+                  ),
+                  ToggleIconButton(
+                    icon: Icons.flag_outlined,
+                    callback: () => setState(() {
+                      isImportant = !isImportant;
+                    }),
+                    isSelected: isImportant,
+                  ),
+                  ToggleIconButton(
+                    icon: Icons.alarm,
+                    callback: () => setState(() {
+                      isReminderSet = !isReminderSet;
+                    }),
+                    isSelected: isReminderSet,
+                  ),
                 ],
               ),
               GestureDetector(
                 onTap: () async {
-                  bool result =
-                      await TaskApiClient().addTask(controller.text, null);
+                  bool result = await TaskApiClient().addTask(
+                    name: controller.text,
+                    category: null,
+                    color: color,
+                    isImportant: isImportant,
+                    isReminderSet: isReminderSet,
+                    deadline: dateTime,
+                  );
                   if (result) Navigator.pop(context, result);
                 },
                 child: Align(
@@ -198,7 +229,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   }
 
   String formatDate(DateTime? date) {
-    if (date == null) return 'Today';
+    if (date == null) return '';
     if (date.isToday) return 'Today';
     if (date.isTomorrow) return 'Tomorrow';
 

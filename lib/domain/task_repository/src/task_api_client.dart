@@ -76,7 +76,14 @@ class TaskApiClient implements TaskRepository {
   }
 
   @override
-  Future<bool> addTask(String name, String? category) async {
+  Future<bool> addTask({
+    required String name,
+    required String? category,
+    required bool isImportant,
+    required bool isReminderSet,
+    Color? color,
+    DateTime? deadline,
+  }) async {
     Response response;
     try {
       String? token =
@@ -84,8 +91,16 @@ class TaskApiClient implements TaskRepository {
 
       if (token == null) return false;
 
-      Map<String, String> body = {'name': name};
-      if (category != null) body['category'] = category;
+      Map<String, dynamic> body = {};
+
+      body['name'] = name;
+      body['category'] = category;
+      body['isImportant'] = isImportant;
+      body['isReminderSet'] = isReminderSet;
+      body['color'] = color == null
+          ? null
+          : '#${color.value.toRadixString(16).padLeft(8, '0')}';
+      body['deadline'] = deadline?.millisecondsSinceEpoch;
 
       print(token);
       print("$tasksEndpoint/tasks");
@@ -100,7 +115,7 @@ class TaskApiClient implements TaskRepository {
         ),
       );
     } on DioError catch (e) {
-      debugPrintStack(stackTrace: e.stackTrace);
+      print(e);
       return false;
     }
     return response.statusCode == 201;

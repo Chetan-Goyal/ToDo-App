@@ -19,6 +19,7 @@ class TaskModel with _$TaskModel {
     required String userId,
     @Default('Default')
         String category,
+    required DateTime? deadline,
   }) = _TaskModel;
 
   factory TaskModel.fromJson(Map<String, dynamic> json) =>
