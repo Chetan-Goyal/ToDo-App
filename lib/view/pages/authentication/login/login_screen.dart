@@ -21,9 +21,6 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    usernameController.text = 'aaaaaa';
-    passwordController.text = 'aaaaaa';
-
     return Scaffold(
       body: Background(
         child: SingleChildScrollView(
