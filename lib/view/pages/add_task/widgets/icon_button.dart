@@ -20,7 +20,7 @@ class ToggleIconButton extends StatelessWidget {
       icon: Container(
         // padding: EdgeInsets.all(20.0),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           color: isSelected ? Colors.blue : Colors.transparent,
           border: Border.all(color: Colors.grey),
         ),

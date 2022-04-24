@@ -37,6 +37,7 @@ dependencies:
   freezed: ^1.1.1
   flutter_zoom_drawer: ^2.3.1+1
   syncfusion_flutter_charts: ^19.4.56
+  fluttertoast: ^8.0.9
 
 dev_dependencies:
   flutter_test:

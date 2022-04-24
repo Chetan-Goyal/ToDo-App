@@ -351,42 +351,47 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SliverAnimatedList(
                   itemBuilder: (ctx, index, animator) {
-                    return Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        child: defaultPaddingWrapper(
-                          size: _size,
-                          child: Container(
-                            child: Row(
-                              children: [
-                                const SizedBox(width: 20),
-                                Icon(
-                                  tasks[index].completed
-                                      ? Icons.check_circle
-                                      : Icons.circle_outlined,
-                                  color:
-                                      categoriesColors[tasks[index].category],
+                    return GestureDetector(
+                      onTap: () => ref
+                          .read(tasksNotifierProvider.notifier)
+                          .complete(tasks[index]),
+                      child: Padding(
+                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          child: defaultPaddingWrapper(
+                            size: _size,
+                            child: Container(
+                              child: Row(
+                                children: [
+                                  const SizedBox(width: 20),
+                                  Icon(
+                                    tasks[index].completed
+                                        ? Icons.check_circle
+                                        : Icons.circle_outlined,
+                                    color:
+                                        categoriesColors[tasks[index].category],
+                                  ),
+                                  const SizedBox(width: 25),
+                                  Text(
+                                    tasks[index].name,
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              constraints: BoxConstraints.tight(
+                                Size(
+                                  _size.width * 0.95,
+                                  60,
                                 ),
-                                const SizedBox(width: 25),
-                                Text(
-                                  tasks[index].name,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            constraints: BoxConstraints.tight(
-                              Size(
-                                _size.width * 0.95,
-                                60,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
                               ),
                             ),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                        ));
+                          )),
+                    );
                   },
                   initialItemCount: tasks.length,
                 )

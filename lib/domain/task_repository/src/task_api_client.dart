@@ -12,11 +12,14 @@ class TaskApiClient implements TaskRepository {
     Response response;
     try {
       response = await dioConfig().request(
-        "$tasksEndpoint/tasks/$id",
-        options: Options(method: 'GET'),
+        "$tasksEndpoint/tasks/complete/$id",
+        // options: Options(method: 'PATCH'),
       );
     } on DioError catch (e) {
-      debugPrintStack(stackTrace: e.stackTrace);
+      print(e);
+      return false;
+    } catch (e) {
+      print(e);
       return false;
     }
     return response.statusCode == 200;

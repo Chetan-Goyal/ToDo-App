@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riverpod/riverpod.dart';
@@ -21,6 +22,24 @@ class TasksNotifier extends StateNotifier<TasksState> {
         state = const TasksLoading();
       }
       final List<TaskModel> tasks = await _taskRepository.getTasks();
+      state = TasksLoaded(tasks);
+    } catch (e) {
+      state = const TasksError('Error while loading Tasks');
+    }
+  }
+
+  Future<void> complete(TaskModel task) async {
+    try {
+      if (state is! TasksLoaded) {
+        Fluttertoast.showToast(msg: 'Please wait for pending task to complete');
+        return;
+      }
+      final tasks = (state as TasksLoaded).value;
+      state = const TasksLoading();
+
+      final result = await _taskRepository.completeTask(task.id!);
+      tasks.remove(task);
+      // if (result)
       state = TasksLoaded(tasks);
     } catch (e) {
       state = const TasksError('Error while loading Tasks');
