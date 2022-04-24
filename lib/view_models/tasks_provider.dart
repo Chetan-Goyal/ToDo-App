@@ -35,11 +35,10 @@ class TasksNotifier extends StateNotifier<TasksState> {
         return;
       }
       final tasks = (state as TasksLoaded).value;
-      state = const TasksLoading();
+      state = TasksLoading(tasks);
 
       final result = await _taskRepository.completeTask(task.id!);
-      tasks.remove(task);
-      // if (result)
+      if (result) tasks.remove(task);
       state = TasksLoaded(tasks);
     } catch (e) {
       state = const TasksError('Error while loading Tasks');

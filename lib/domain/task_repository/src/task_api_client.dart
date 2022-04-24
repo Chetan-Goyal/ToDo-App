@@ -10,10 +10,14 @@ class TaskApiClient implements TaskRepository {
   @override
   Future<bool> completeTask(String id) async {
     Response response;
+
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+
+    if (token == null) return false;
     try {
       response = await dioConfig().request(
         "$tasksEndpoint/tasks/complete/$id",
-        // options: Options(method: 'PATCH'),
+        options: Options(headers: {'x-access-token': token, 'Accept': '*/*'}),
       );
     } on DioError catch (e) {
       print(e);

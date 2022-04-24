@@ -4,6 +4,7 @@ import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/providers/tasks_providers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import 'package:todo_app/view/pages/add_task/add_task_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -396,6 +397,19 @@ class HomeScreen extends ConsumerWidget {
                   initialItemCount: tasks.length,
                 )
               ],
+            ),
+            floatingActionButton: FloatingActionButton(
+              onPressed: () async {
+                dynamic result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const AddTaskScreen(),
+                  ),
+                );
+                if (result == true)
+                  await ref.read(tasksNotifierProvider.notifier).getTasks();
+              },
+              child: const Icon(Icons.add),
             ),
           ),
         );
