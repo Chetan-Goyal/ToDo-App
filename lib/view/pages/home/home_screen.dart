@@ -89,7 +89,7 @@ class HomeScreen extends ConsumerWidget {
                         Align(
                           alignment: Alignment.bottomRight,
                           child: GestureDetector(
-                            onTap: _drawerController.toggle!.call,
+                            onTap: () => _drawerController.toggle!.call(),
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
@@ -206,7 +206,7 @@ class HomeScreen extends ConsumerWidget {
                   pinned: true,
                   backgroundColor: Colors.white.withOpacity(0),
                   leading: InkWell(
-                    onTap: _drawerController.toggle!.call,
+                    onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
                       Icons.menu,
                       size: 0.09 * _size.width,
