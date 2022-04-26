@@ -14,7 +14,6 @@ class TasksNotifier extends StateNotifier<TasksState> {
   final TaskRepository _taskRepository = GetIt.I.get<TaskRepository>();
 
   Future<void> getTasks() async {
-    print("Getting Tasks");
     try {
       if (state is TasksLoaded) {
         state = TasksLoading((state as TasksLoaded).value);

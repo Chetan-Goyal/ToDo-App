@@ -68,13 +68,12 @@ class LoginScreen extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                            builder: (ctx) => HomeScreen(),
+                            builder: (ctx) => const HomeScreen(),
                           ),
                           (_) => true,
                         );
-                        print('Navigate to Home Screen');
                       } else {
-                        print('Show Toast for error');
+                        // Todo: Show Toast for error
                       }
                     } else {}
                   },

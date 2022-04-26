@@ -8,6 +8,7 @@ import 'package:todo_app/view/pages/authentication/widgets/already_have_an_accou
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_button.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_input_field.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_password_field.dart';
+import 'package:todo_app/view/pages/home/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -77,9 +78,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         passwordController.text,
                       );
                       if (result) {
-                        print('Navigate to Home Screen');
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (ctx) => const HomeScreen(),
+                          ),
+                          (_) => true,
+                        );
                       } else {
-                        print('Show Toast for error');
+                        // Todo: Show Toast for error
                       }
                     } else {}
                   },

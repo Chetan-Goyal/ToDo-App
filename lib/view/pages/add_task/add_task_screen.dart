@@ -117,7 +117,6 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                                 child: BlockPicker(
                                   pickerColor: Colors.black,
                                   onColorChanged: (_color) {
-                                    print('Selected color: $_color');
                                     color = _color;
                                     setState(() {});
                                   },
