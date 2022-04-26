@@ -38,6 +38,8 @@ dependencies:
   flutter_zoom_drawer: ^2.3.1+1
   syncfusion_flutter_charts: ^19.4.56
   fluttertoast: ^8.0.9
+  flutter_slidable: ^1.2.0
+  share_plus: ^4.0.4
 
 dev_dependencies:
   flutter_test:

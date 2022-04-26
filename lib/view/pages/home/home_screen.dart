@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/providers/tasks_providers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -352,46 +354,78 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SliverAnimatedList(
                   itemBuilder: (ctx, index, animator) {
-                    return GestureDetector(
-                      onTap: () => ref
-                          .read(tasksNotifierProvider.notifier)
-                          .complete(tasks[index]),
-                      child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: defaultPaddingWrapper(
-                            size: _size,
-                            child: Container(
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 20),
-                                  Icon(
-                                    tasks[index].completed
-                                        ? Icons.check_circle
-                                        : Icons.circle_outlined,
-                                    color:
-                                        categoriesColors[tasks[index].category],
+                    return Slidable(
+                      startActionPane: ActionPane(
+                        extentRatio: 0.5,
+                        motion: const DrawerMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (_) {
+                              ref
+                                  .read(tasksNotifierProvider.notifier)
+                                  .delete(tasks[index]);
+                            },
+                            backgroundColor: const Color(0xFFFE4A49),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Delete',
+                          ),
+                          SlidableAction(
+                            onPressed: (_) {
+                              Share.share(tasks[index].name);
+                            },
+                            backgroundColor: const Color(0xFF21B7CA),
+                            foregroundColor: Colors.white,
+                            icon: Icons.share,
+                            label: 'Share',
+                          ),
+                        ],
+                      ),
+                      key: Key(tasks[index].id),
+                      child: GestureDetector(
+                        onTap: () {
+                          print('OnTap');
+                          ref
+                              .read(tasksNotifierProvider.notifier)
+                              .complete(tasks[index]);
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: defaultPaddingWrapper(
+                              size: _size,
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 20),
+                                    Icon(
+                                      tasks[index].completed
+                                          ? Icons.check_circle
+                                          : Icons.circle_outlined,
+                                      color: categoriesColors[
+                                          tasks[index].category],
+                                    ),
+                                    const SizedBox(width: 25),
+                                    Text(
+                                      tasks[index].name,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                                constraints: BoxConstraints.tight(
+                                  Size(
+                                    _size.width * 0.95,
+                                    60,
                                   ),
-                                  const SizedBox(width: 25),
-                                  Text(
-                                    tasks[index].name,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              constraints: BoxConstraints.tight(
-                                Size(
-                                  _size.width * 0.95,
-                                  60,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          )),
+                            )),
+                      ),
                     );
                   },
                   initialItemCount: tasks.length,
@@ -406,8 +440,9 @@ class HomeScreen extends ConsumerWidget {
                     builder: (context) => const AddTaskScreen(),
                   ),
                 );
-                if (result == true)
+                if (result == true) {
                   await ref.read(tasksNotifierProvider.notifier).getTasks();
+                }
               },
               child: const Icon(Icons.add),
             ),
