@@ -32,10 +32,14 @@ class TaskApiClient implements TaskRepository {
   @override
   Future<bool> deleteTask(String id) async {
     Response response;
+
+    String? token = await const FlutterSecureStorage().read(key: 'accessToken');
+
+    if (token == null) return false;
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().delete(
         "$tasksEndpoint/tasks/$id",
-        options: Options(method: 'DELETE'),
+        options: Options(headers: {'x-access-token': token, 'Accept': '*/*'}),
       );
     } on DioError catch (e) {
       debugPrintStack(stackTrace: e.stackTrace);
@@ -52,10 +56,11 @@ class TaskApiClient implements TaskRepository {
 
     if (token == null) return [];
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().get(
         "$tasksEndpoint/tasks",
         options: Options(
-            headers: {'x-access-token': token, 'Accept': '*/*'}, method: 'GET'),
+          headers: {'x-access-token': token, 'Accept': '*/*'},
+        ),
       );
     } on DioError catch (e) {
       debugPrintStack(stackTrace: e.stackTrace);

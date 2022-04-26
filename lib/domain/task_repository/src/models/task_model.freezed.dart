@@ -23,7 +23,7 @@ class _$TaskModelTearOff {
   const _$TaskModelTearOff();
 
   _TaskModel call(
-      {@JsonKey(name: '_id') required String? id,
+      {@JsonKey(name: '_id') required String id,
       required String name,
       required bool completed,
       required String userId,
@@ -50,7 +50,7 @@ const $TaskModel = _$TaskModelTearOff();
 /// @nodoc
 mixin _$TaskModel {
   @JsonKey(name: '_id')
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   bool get completed => throw _privateConstructorUsedError;
   String get userId => throw _privateConstructorUsedError;
@@ -68,7 +68,7 @@ abstract class $TaskModelCopyWith<$Res> {
   factory $TaskModelCopyWith(TaskModel value, $Res Function(TaskModel) then) =
       _$TaskModelCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: '_id') String id,
       String name,
       bool completed,
       String userId,
@@ -97,7 +97,7 @@ class _$TaskModelCopyWithImpl<$Res> implements $TaskModelCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -129,7 +129,7 @@ abstract class _$TaskModelCopyWith<$Res> implements $TaskModelCopyWith<$Res> {
       __$TaskModelCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: '_id') String? id,
+      {@JsonKey(name: '_id') String id,
       String name,
       bool completed,
       String userId,
@@ -159,7 +159,7 @@ class __$TaskModelCopyWithImpl<$Res> extends _$TaskModelCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -200,7 +200,7 @@ class _$_TaskModel implements _TaskModel {
 
   @override
   @JsonKey(name: '_id')
-  final String? id;
+  final String id;
   @override
   final String name;
   @override
@@ -254,7 +254,7 @@ class _$_TaskModel implements _TaskModel {
 
 abstract class _TaskModel implements TaskModel {
   const factory _TaskModel(
-      {@JsonKey(name: '_id') required String? id,
+      {@JsonKey(name: '_id') required String id,
       required String name,
       required bool completed,
       required String userId,
@@ -266,7 +266,7 @@ abstract class _TaskModel implements TaskModel {
 
   @override
   @JsonKey(name: '_id')
-  String? get id;
+  String get id;
   @override
   String get name;
   @override

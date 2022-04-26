@@ -13,7 +13,7 @@ List<TaskModel> taskModelsFromJson(Map<String, dynamic> tasks) =>
 class TaskModel with _$TaskModel {
   const factory TaskModel({
     @JsonKey(name: '_id') // ignore: invalid_annotation_target
-        required String? id,
+        required String id,
     required String name,
     required bool completed,
     required String userId,

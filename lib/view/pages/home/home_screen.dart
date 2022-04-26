@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/providers/tasks_providers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:todo_app/view/pages/add_task/add_task_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  const HomeScreen({Key? key}) : super(key: key);
 
-  final ZoomDrawerController _drawerController = ZoomDrawerController();
+  static final ZoomDrawerController _drawerController = ZoomDrawerController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,7 +48,6 @@ class HomeScreen extends ConsumerWidget {
         ];
         Map<String, Color> categoriesColors = {};
 
-        // print("Category: ${categories[0]}");
         for (int i = 0; i < categories.length; i++) {
           categoriesColors[categories[i]] = colours[i % 4];
         }
@@ -55,7 +56,6 @@ class HomeScreen extends ConsumerWidget {
           controller: _drawerController,
           showShadow: false,
           angle: 0,
-          // backgroundColor: Colors.grey,
           slideWidth: _size.width * 0.65,
           backgroundColor: const Color(0xFF0D2260),
           borderRadius: 50,
@@ -84,17 +84,12 @@ class HomeScreen extends ConsumerWidget {
                             ).image,
                             radius: 50,
                           ),
-
-                          //  const Placeholder(
-                          //   fallbackHeight: 100,
-                          //   fallbackWidth: 100,
-                          // ),
                         ),
                         const Spacer(),
                         Align(
                           alignment: Alignment.bottomRight,
-                          child: InkWell(
-                            onTap: () => _drawerController.toggle?.call(),
+                          child: GestureDetector(
+                            onTap: () => _drawerController.toggle!.call(),
                             child: Container(
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
@@ -152,37 +147,37 @@ class HomeScreen extends ConsumerWidget {
                       width: 200,
                       height: 100,
                       child: SfCartesianChart(
-                          plotAreaBorderWidth: 0,
-                          // title: ChartTitle(text: 'Half yearly sales analysis'),
-                          primaryXAxis: CategoryAxis(
-                            isVisible: false,
-                            //Hide the gridlines of x-axis
-                            majorGridLines: const MajorGridLines(width: 0),
-                            //Hide the axis line of x-axis
-                            axisLine: const AxisLine(width: 0),
-                          ),
-                          primaryYAxis: CategoryAxis(
-                            isVisible: false,
-                            //Hide the gridlines of y-axis
-                            majorGridLines: const MajorGridLines(width: 0),
-                            //Hide the axis line of y-axis
-                            axisLine: const AxisLine(width: 0),
-                          ),
-                          series: <SplineSeries<List, String>>[
-                            SplineSeries<List, String>(
-                              dataSource: const [
-                                ["Monday", 4],
-                                ['Tuesday', 5],
-                                ['Wednesday', 2],
-                                ['Thursday', 3],
-                                ['Friday', 8],
-                                ['Saturday', 5],
-                                ['Sunday', 0],
-                              ],
-                              xValueMapper: (List sales, _) => sales[0],
-                              yValueMapper: (List sales, _) => sales[1] as int,
-                            )
-                          ]),
+                        plotAreaBorderWidth: 0,
+                        primaryXAxis: CategoryAxis(
+                          isVisible: false,
+                          //Hide the gridlines of x-axis
+                          majorGridLines: const MajorGridLines(width: 0),
+                          //Hide the axis line of x-axis
+                          axisLine: const AxisLine(width: 0),
+                        ),
+                        primaryYAxis: CategoryAxis(
+                          isVisible: false,
+                          //Hide the gridlines of y-axis
+                          majorGridLines: const MajorGridLines(width: 0),
+                          //Hide the axis line of y-axis
+                          axisLine: const AxisLine(width: 0),
+                        ),
+                        series: <SplineSeries<List, String>>[
+                          SplineSeries<List, String>(
+                            dataSource: const [
+                              ["Monday", 4],
+                              ['Tuesday', 5],
+                              ['Wednesday', 2],
+                              ['Thursday', 3],
+                              ['Friday', 8],
+                              ['Saturday', 5],
+                              ['Sunday', 0],
+                            ],
+                            xValueMapper: (List sales, _) => sales[0],
+                            yValueMapper: (List sales, _) => sales[1] as int,
+                          )
+                        ],
+                      ),
                     ),
                     const Text(
                       'Good',
@@ -211,9 +206,7 @@ class HomeScreen extends ConsumerWidget {
                   pinned: true,
                   backgroundColor: Colors.white.withOpacity(0),
                   leading: InkWell(
-                    onTap: () {
-                      _drawerController.toggle?.call();
-                    },
+                    onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
                       Icons.menu,
                       size: 0.09 * _size.width,
@@ -352,46 +345,75 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SliverAnimatedList(
                   itemBuilder: (ctx, index, animator) {
-                    return GestureDetector(
-                      onTap: () => ref
-                          .read(tasksNotifierProvider.notifier)
-                          .complete(tasks[index]),
-                      child: Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: defaultPaddingWrapper(
-                            size: _size,
-                            child: Container(
-                              child: Row(
-                                children: [
-                                  const SizedBox(width: 20),
-                                  Icon(
-                                    tasks[index].completed
-                                        ? Icons.check_circle
-                                        : Icons.circle_outlined,
-                                    color:
-                                        categoriesColors[tasks[index].category],
+                    return Slidable(
+                      startActionPane: ActionPane(
+                        extentRatio: 0.5,
+                        motion: const DrawerMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (_) {
+                              ref
+                                  .read(tasksNotifierProvider.notifier)
+                                  .delete(tasks[index]);
+                            },
+                            backgroundColor: const Color(0xFFFE4A49),
+                            foregroundColor: Colors.white,
+                            icon: Icons.delete,
+                            label: 'Delete',
+                          ),
+                          SlidableAction(
+                            onPressed: (_) {
+                              Share.share(tasks[index].name);
+                            },
+                            backgroundColor: const Color(0xFF21B7CA),
+                            foregroundColor: Colors.white,
+                            icon: Icons.share,
+                            label: 'Share',
+                          ),
+                        ],
+                      ),
+                      key: Key(tasks[index].id),
+                      child: GestureDetector(
+                        onTap: () => ref
+                            .read(tasksNotifierProvider.notifier)
+                            .complete(tasks[index]),
+                        child: Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 10),
+                            child: defaultPaddingWrapper(
+                              size: _size,
+                              child: Container(
+                                child: Row(
+                                  children: [
+                                    const SizedBox(width: 20),
+                                    Icon(
+                                      tasks[index].completed
+                                          ? Icons.check_circle
+                                          : Icons.circle_outlined,
+                                      color: categoriesColors[
+                                          tasks[index].category],
+                                    ),
+                                    const SizedBox(width: 25),
+                                    Text(
+                                      tasks[index].name,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ],
+                                ),
+                                constraints: BoxConstraints.tight(
+                                  Size(
+                                    _size.width * 0.95,
+                                    60,
                                   ),
-                                  const SizedBox(width: 25),
-                                  Text(
-                                    tasks[index].name,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600),
-                                  ),
-                                ],
-                              ),
-                              constraints: BoxConstraints.tight(
-                                Size(
-                                  _size.width * 0.95,
-                                  60,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                            ),
-                          )),
+                            )),
+                      ),
                     );
                   },
                   initialItemCount: tasks.length,
@@ -406,8 +428,9 @@ class HomeScreen extends ConsumerWidget {
                     builder: (context) => const AddTaskScreen(),
                   ),
                 );
-                if (result == true)
+                if (result == true) {
                   await ref.read(tasksNotifierProvider.notifier).getTasks();
+                }
               },
               child: const Icon(Icons.add),
             ),
