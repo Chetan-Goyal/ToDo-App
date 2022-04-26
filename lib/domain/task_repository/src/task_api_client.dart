@@ -56,11 +56,10 @@ class TaskApiClient implements TaskRepository {
 
     if (token == null) return [];
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().get(
         "$tasksEndpoint/tasks",
         options: Options(
           headers: {'x-access-token': token, 'Accept': '*/*'},
-          method: 'GET',
         ),
       );
     } on DioError catch (e) {
