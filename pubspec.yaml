@@ -34,7 +34,7 @@ dependencies:
   json_annotation: ^4.4.0
   intl: ^0.17.0
   flutter_colorpicker: ^1.0.3
-  freezed: ^1.1.1
+  freezed: ^2.0.0
   flutter_zoom_drawer: ^2.3.1+1
   syncfusion_flutter_charts: ^19.4.56
   fluttertoast: ^8.0.9
