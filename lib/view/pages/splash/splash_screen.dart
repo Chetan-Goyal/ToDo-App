@@ -26,14 +26,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   initialiseData() async {
+    final navigator = Navigator.of(context);
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     bool? initialised = prefs.getBool('Initialised');
 
     if (initialised == null) {
-      return Navigator.pushReplacement(
-        context,
+      return navigator.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const OnboardingScreen(),
         ),
@@ -41,8 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (token == null) {
-      return Navigator.pushReplacement(
-        context,
+      return navigator.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const SignUpScreen(),
         ),
@@ -52,13 +52,11 @@ class _SplashScreenState extends State<SplashScreen> {
     bool result = await locator.get<AuthRepository>().validateToken(token);
 
     if (result) {
-      Navigator.pushReplacement(
-        context,
+      navigator.pushReplacement(
         MaterialPageRoute(builder: (_) => const HomeScreen()),
       );
     } else {
-      Navigator.pushReplacement(
-        context,
+      navigator.pushReplacement(
         MaterialPageRoute(builder: (_) => const SignUpScreen()),
       );
     }

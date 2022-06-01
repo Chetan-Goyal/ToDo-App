@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:todo_app/config/constants.dart';
@@ -15,7 +16,7 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
     final provider = ref.watch(tasksNotifierProvider);
 
@@ -56,18 +57,17 @@ class HomeScreen extends ConsumerWidget {
           controller: _drawerController,
           showShadow: false,
           angle: 0,
-          slideWidth: _size.width * 0.65,
-          backgroundColor: const Color(0xFF0D2260),
+          slideWidth: size.width * 0.85,
+          menuBackgroundColor: const Color(0xFF0D2260),
           borderRadius: 50,
           mainScreenScale: 0.2,
           menuScreen: Scaffold(
               backgroundColor: const Color(0xFF0D2260),
               body: Padding(
                 padding: EdgeInsets.only(
-                  top: _size.width * 0.25,
-                  right: _size.width * 0.35,
-                  left: _size.width * 0.1,
-                  bottom: _size.width * 0.25,
+                  top: size.width * 0.25,
+                  left: size.width * 0.1,
+                  bottom: size.width * 0.25,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -209,20 +209,20 @@ class HomeScreen extends ConsumerWidget {
                     onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
                       Icons.menu,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
                   ),
                   actions: [
                     Icon(
                       Icons.search,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
-                    SizedBox(width: 0.05 * _size.width),
+                    SizedBox(width: 0.05 * size.width),
                     Icon(
                       Icons.notifications,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
                   ],
@@ -230,9 +230,9 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: Container(
-                      margin: EdgeInsets.only(right: 0.2 * _size.width),
+                      margin: EdgeInsets.only(right: 0.2 * size.width),
                       child: const FittedBox(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -250,10 +250,10 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: headingWrapper(
                       title: 'CATEGORIES',
-                      margin: 0.6 * _size.width,
+                      margin: 0.6 * size.width,
                     ),
                   ),
                 ),
@@ -284,13 +284,7 @@ class HomeScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .length
-                                            .toString() +
-                                        " Tasks",
+                                    "${tasks.where((element) => element.category == categories[index]).length} Tasks",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12,
@@ -336,10 +330,10 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: headingWrapper(
                       title: 'TODAY\'S TASKS',
-                      margin: 0.55 * _size.width,
+                      margin: 0.55 * size.width,
                     ),
                   ),
                 ),
@@ -380,8 +374,18 @@ class HomeScreen extends ConsumerWidget {
                         child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: defaultPaddingWrapper(
-                              size: _size,
+                              size: size,
                               child: Container(
+                                constraints: BoxConstraints.tight(
+                                  Size(
+                                    size.width * 0.95,
+                                    60,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: Row(
                                   children: [
                                     const SizedBox(width: 20),
@@ -400,16 +404,6 @@ class HomeScreen extends ConsumerWidget {
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ],
-                                ),
-                                constraints: BoxConstraints.tight(
-                                  Size(
-                                    _size.width * 0.95,
-                                    60,
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                             )),
@@ -495,7 +489,7 @@ class DrawerTileWidget extends StatelessWidget {
     return ListTile(
       leading: Icon(item.icon, color: Colors.white),
       title: Text(item.title, style: const TextStyle(color: Colors.white)),
-      horizontalTitleGap: 5,
+      // horizontalTitleGap: 5,
       onTap: null,
     );
   }
