@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:todo_app/domain/auth_repository/src/auth_api_client.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
-import 'package:todo_app/view/pages/home/home_screen.dart';
+import 'package:todo_app/view/pages/home/home_screen_new.dart';
 import 'package:todo_app/view/pages/authentication/widgets/already_have_an_account_acheck.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_button.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_input_field.dart';

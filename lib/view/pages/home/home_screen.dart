@@ -340,6 +340,7 @@ class HomeScreen extends ConsumerWidget {
                 SliverAnimatedList(
                   itemBuilder: (ctx, index, animator) {
                     return Slidable(
+                      key: Key(tasks[index].id),
                       startActionPane: ActionPane(
                         extentRatio: 0.5,
                         motion: const DrawerMotion(),
@@ -366,7 +367,6 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      key: Key(tasks[index].id),
                       child: GestureDetector(
                         onTap: () => ref
                             .read(tasksNotifierProvider.notifier)

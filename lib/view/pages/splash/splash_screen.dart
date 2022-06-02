@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/config/locator.dart';
 import 'package:todo_app/domain/auth_repository/auth_repository.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
-import 'package:todo_app/view/pages/home/home_screen.dart';
+import 'package:todo_app/view/pages/home/home_screen_new.dart';
 import 'package:todo_app/view/pages/onboarding/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
