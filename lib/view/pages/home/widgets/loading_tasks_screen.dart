@@ -38,7 +38,7 @@ class LoadingTasksScreen extends StatelessWidget {
               const SizedBox(height: 20),
             ],
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           defaultPaddingWrapper(
             size: size,
             child: Align(
