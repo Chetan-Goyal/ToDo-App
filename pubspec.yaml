@@ -40,6 +40,8 @@ dependencies:
   fluttertoast: ^8.0.9
   flutter_slidable: ^1.2.0
   share_plus: ^4.0.4
+  flutter_spinkit: ^5.1.0
+  shimmer: ^2.0.0
 
 dev_dependencies:
   flutter_test:
@@ -47,6 +49,12 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   build_runner:
   json_serializable: ^6.1.4
+  icons_launcher: ^1.1.9
+
+flutter_icons:
+  image_path: 'assets/icons/logo.png'
+  ios: true
+  android: true
 
 flutter:
   uses-material-design: true

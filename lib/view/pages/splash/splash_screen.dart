@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/config/locator.dart';
 import 'package:todo_app/domain/auth_repository/auth_repository.dart';
 import 'package:todo_app/view/pages/authentication/signup/signup_screen.dart';
-import 'package:todo_app/view/pages/home/home_screen_new.dart';
+import 'package:todo_app/view/pages/home/home_screen_new_logic.dart';
 import 'package:todo_app/view/pages/onboarding/onboarding.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -64,10 +65,34 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      backgroundColor: Image.asset("assets/images/onboarding/bg.png").color,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/onboarding/bg.png"),
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.low,
+            opacity: 1,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              const Spacer(),
+              Image.asset(
+                'assets/icons/logo.png',
+                width: MediaQuery.of(context).size.width * 0.5,
+              ),
+              const Spacer(flex: 2),
+              const SpinKitFadingCube(
+                color: Color.fromRGBO(254, 247, 232, 1),
+                duration: Duration(milliseconds: 3000),
+              ),
+              const Spacer(),
+            ],
+          ),
+        ),
       ),
     );
   }
