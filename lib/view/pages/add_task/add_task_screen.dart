@@ -76,10 +76,10 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          DateTime? _dateTime =
+                          DateTime? prevDateTime =
                               await selectDate(context, dateTime);
-                          if (_dateTime != null) {
-                            dateTime = _dateTime;
+                          if (prevDateTime != null) {
+                            dateTime = prevDateTime;
                             setState(() {});
                           }
                         },
@@ -116,8 +116,8 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                               content: SingleChildScrollView(
                                 child: BlockPicker(
                                   pickerColor: Colors.black,
-                                  onColorChanged: (_color) {
-                                    color = _color;
+                                  onColorChanged: (newColor) {
+                                    color = newColor;
                                     setState(() {});
                                   },
                                 ),
@@ -188,6 +188,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               ),
               GestureDetector(
                 onTap: () async {
+                  final navigator = Navigator.of(context);
                   bool result = await TaskApiClient().addTask(
                     name: controller.text,
                     category: null,
@@ -196,7 +197,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                     isReminderSet: isReminderSet,
                     deadline: dateTime,
                   );
-                  if (result) Navigator.pop(context, result);
+                  if (result) navigator.pop(result);
                 },
                 child: Align(
                   alignment: Alignment.centerRight,

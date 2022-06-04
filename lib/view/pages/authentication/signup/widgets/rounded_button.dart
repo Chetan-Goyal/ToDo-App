@@ -28,10 +28,6 @@ class RoundedButton extends StatelessWidget {
 
   Widget newElevatedButton() {
     return ElevatedButton(
-      child: Text(
-        text,
-        style: TextStyle(color: textColor),
-      ),
       onPressed: press,
       style: ElevatedButton.styleFrom(
         primary: color,
@@ -41,6 +37,10 @@ class RoundedButton extends StatelessWidget {
           fontSize: 14,
           fontWeight: FontWeight.w500,
         ),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(color: textColor),
       ),
     );
   }

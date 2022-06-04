@@ -14,7 +14,7 @@ class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
   @override
-  _SignUpScreenState createState() => _SignUpScreenState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
@@ -70,6 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 RoundedButton(
                   text: "SIGNUP",
                   press: () async {
+                    final navigator = Navigator.of(context);
                     if (_formKey.currentState != null &&
                         _formKey.currentState!.validate()) {
                       bool result = await AuthApiClient().register(
@@ -78,8 +79,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         passwordController.text,
                       );
                       if (result) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
+                        navigator.pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (ctx) => const HomeScreen(),
                           ),

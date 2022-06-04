@@ -1,12 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:todo_app/config/constants.dart';
+import 'package:todo_app/domain/task_repository/task_repository.dart';
 import 'package:todo_app/providers/tasks_providers.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:todo_app/view/pages/add_task/add_task_screen.dart';
+import 'package:todo_app/view_models/tasks_provider.dart';
+
+import 'widgets/loading_tasks_screen.dart';
+import 'widgets/padding_wrappers.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -15,190 +22,188 @@ class HomeScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Size _size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
 
-    final provider = ref.watch(tasksNotifierProvider);
+    final tasksState = ref.watch(tasksNotifierProvider);
 
-    return provider.when(
-      initial: () {
-        return Container();
-      },
-      loading: (tasks) {
-        return const Center(child: CircularProgressIndicator());
-      },
-      error: (message) {
-        return Center(child: Text(message));
-      },
-      loaded: (tasks) {
-        List<String> categories = <String>[];
-        for (int i = 0; i < tasks.length; i++) {
-          categories.add(tasks[i].category);
-        }
-        tasks.map((e) {
-          categories.add(e.category);
-        }).toList();
+    late List<TaskModel> tasks;
 
-        categories = categories.toSet().toList();
+    if (tasksState is TasksInitial) {
+      return Container();
+    } else if (tasksState is TasksLoading && tasksState.value.isEmpty) {
+      return const LoadingTasksScreen();
+    } else if (tasksState is TasksLoaded) {
+      tasks = tasksState.value;
+    } else if (tasksState is TasksLoading) {
+      tasks = tasksState.value;
+    }
 
-        List<Color> colours = [
-          Colors.red,
-          Colors.blue,
-          Colors.purple,
-          Colors.teal
-        ];
-        Map<String, Color> categoriesColors = {};
+    List<String> categories = <String>[];
+    for (int i = 0; i < tasks.length; i++) {
+      categories.add(tasks[i].category);
+    }
+    tasks.map((e) {
+      categories.add(e.category);
+    }).toList();
 
-        for (int i = 0; i < categories.length; i++) {
-          categoriesColors[categories[i]] = colours[i % 4];
-        }
+    categories = categories.toSet().toList();
 
-        return ZoomDrawer(
-          controller: _drawerController,
-          showShadow: false,
-          angle: 0,
-          slideWidth: _size.width * 0.65,
+    List<Color> colours = [Colors.red, Colors.blue, Colors.purple, Colors.teal];
+    Map<String, Color> categoriesColors = {};
+
+    for (int i = 0; i < categories.length; i++) {
+      categoriesColors[categories[i]] = colours[i % 4];
+    }
+
+    return ZoomDrawer(
+      controller: _drawerController,
+      showShadow: false,
+      angle: 0,
+      slideWidth: size.width * 0.85,
+      menuBackgroundColor: const Color(0xFF0D2260),
+      borderRadius: 50,
+      mainScreenScale: 0.2,
+      menuScreen: Scaffold(
           backgroundColor: const Color(0xFF0D2260),
-          borderRadius: 50,
-          mainScreenScale: 0.2,
-          menuScreen: Scaffold(
-              backgroundColor: const Color(0xFF0D2260),
-              body: Padding(
-                padding: EdgeInsets.only(
-                  top: _size.width * 0.25,
-                  right: _size.width * 0.35,
-                  left: _size.width * 0.1,
-                  bottom: _size.width * 0.25,
-                ),
-                child: Column(
+          body: Padding(
+            padding: EdgeInsets.only(
+              top: size.width * 0.25,
+              left: size.width * 0.1,
+              bottom: size.width * 0.25,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 25.0),
-                          child: CircleAvatar(
-                            backgroundImage: Image.network(
-                              'https://via.placeholder.com/150',
-                            ).image,
-                            radius: 50,
-                          ),
-                        ),
-                        const Spacer(),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: GestureDetector(
-                            onTap: () => _drawerController.toggle!.call(),
-                            child: Container(
-                              padding: const EdgeInsets.all(12),
-                              decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white),
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              child: const Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 30),
-                    const Text(
-                      'Name is here',
-                      style: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white,
-                      ),
-                      maxLines: 1,
-                    ),
-                    DrawerTileWidget(
-                      item: DrawerItem(
-                        DrawerItemType.templates,
-                        'Templates',
-                        Icons.bookmark_border_rounded,
-                      ),
-                    ),
-                    DrawerTileWidget(
-                      item: DrawerItem(
-                        DrawerItemType.categories,
-                        'Categories',
-                        Icons.grid_view_outlined,
-                      ),
-                    ),
-                    DrawerTileWidget(
-                      item: DrawerItem(
-                        DrawerItemType.analytics,
-                        'Analytics',
-                        Icons.auto_graph_sharp,
-                      ),
-                    ),
-                    DrawerTileWidget(
-                      item: DrawerItem(
-                        DrawerItemType.settings,
-                        'Settings',
-                        Icons.settings,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 25.0),
+                      child: CircleAvatar(
+                        backgroundImage: Image.network(
+                          'https://via.placeholder.com/150',
+                        ).image,
+                        radius: 50,
                       ),
                     ),
                     const Spacer(),
-                    SizedBox(
-                      width: 200,
-                      height: 100,
-                      child: SfCartesianChart(
-                        plotAreaBorderWidth: 0,
-                        primaryXAxis: CategoryAxis(
-                          isVisible: false,
-                          //Hide the gridlines of x-axis
-                          majorGridLines: const MajorGridLines(width: 0),
-                          //Hide the axis line of x-axis
-                          axisLine: const AxisLine(width: 0),
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: GestureDetector(
+                        onTap: () => _drawerController.toggle!.call(),
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(30),
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
                         ),
-                        primaryYAxis: CategoryAxis(
-                          isVisible: false,
-                          //Hide the gridlines of y-axis
-                          majorGridLines: const MajorGridLines(width: 0),
-                          //Hide the axis line of y-axis
-                          axisLine: const AxisLine(width: 0),
-                        ),
-                        series: <SplineSeries<List, String>>[
-                          SplineSeries<List, String>(
-                            dataSource: const [
-                              ["Monday", 4],
-                              ['Tuesday', 5],
-                              ['Wednesday', 2],
-                              ['Thursday', 3],
-                              ['Friday', 8],
-                              ['Saturday', 5],
-                              ['Sunday', 0],
-                            ],
-                            xValueMapper: (List sales, _) => sales[0],
-                            yValueMapper: (List sales, _) => sales[1] as int,
-                          )
-                        ],
-                      ),
-                    ),
-                    const Text(
-                      'Good',
-                      style: TextStyle(
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const Text(
-                      'Consistency',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
-              )),
-          mainScreen: Scaffold(
+                const SizedBox(height: 30),
+                const Text(
+                  'Name is here',
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                  maxLines: 1,
+                ),
+                DrawerTileWidget(
+                  item: DrawerItem(
+                    DrawerItemType.templates,
+                    'Templates',
+                    Icons.bookmark_border_rounded,
+                  ),
+                ),
+                DrawerTileWidget(
+                  item: DrawerItem(
+                    DrawerItemType.categories,
+                    'Categories',
+                    Icons.grid_view_outlined,
+                  ),
+                ),
+                DrawerTileWidget(
+                  item: DrawerItem(
+                    DrawerItemType.analytics,
+                    'Analytics',
+                    Icons.auto_graph_sharp,
+                  ),
+                ),
+                DrawerTileWidget(
+                  item: DrawerItem(
+                    DrawerItemType.settings,
+                    'Settings',
+                    Icons.settings,
+                  ),
+                ),
+                const Spacer(),
+                SizedBox(
+                  width: 200,
+                  height: 100,
+                  child: SfCartesianChart(
+                    plotAreaBorderWidth: 0,
+                    primaryXAxis: CategoryAxis(
+                      isVisible: false,
+                      //Hide the gridlines of x-axis
+                      majorGridLines: const MajorGridLines(width: 0),
+                      //Hide the axis line of x-axis
+                      axisLine: const AxisLine(width: 0),
+                    ),
+                    primaryYAxis: CategoryAxis(
+                      isVisible: false,
+                      //Hide the gridlines of y-axis
+                      majorGridLines: const MajorGridLines(width: 0),
+                      //Hide the axis line of y-axis
+                      axisLine: const AxisLine(width: 0),
+                    ),
+                    series: <SplineSeries<List, String>>[
+                      SplineSeries<List, String>(
+                        dataSource: const [
+                          ["Monday", 4],
+                          ['Tuesday', 5],
+                          ['Wednesday', 2],
+                          ['Thursday', 3],
+                          ['Friday', 8],
+                          ['Saturday', 5],
+                          ['Sunday', 0],
+                        ],
+                        xValueMapper: (List sales, _) => sales[0],
+                        yValueMapper: (List sales, _) => sales[1] as int,
+                      )
+                    ],
+                  ),
+                ),
+                const Text(
+                  'Good',
+                  style: TextStyle(
+                    // fontWeight: FontWeight.bold,
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+                const Text(
+                  'Consistency',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          )),
+      mainScreen: Stack(children: [
+        IgnorePointer(
+          ignoring: tasksState is TasksLoading,
+          child: Scaffold(
             backgroundColor: scaffoldColor,
             body: CustomScrollView(
               slivers: [
@@ -209,20 +214,20 @@ class HomeScreen extends ConsumerWidget {
                     onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
                       Icons.menu,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
                   ),
                   actions: [
                     Icon(
                       Icons.search,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
-                    SizedBox(width: 0.05 * _size.width),
+                    SizedBox(width: 0.05 * size.width),
                     Icon(
                       Icons.notifications,
-                      size: 0.09 * _size.width,
+                      size: 0.09 * size.width,
                       color: lightGreyColor,
                     ),
                   ],
@@ -230,9 +235,9 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: Container(
-                      margin: EdgeInsets.only(right: 0.2 * _size.width),
+                      margin: EdgeInsets.only(right: 0.2 * size.width),
                       child: const FittedBox(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -250,10 +255,10 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 30)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: headingWrapper(
                       title: 'CATEGORIES',
-                      margin: 0.6 * _size.width,
+                      margin: 0.6 * size.width,
                     ),
                   ),
                 ),
@@ -284,13 +289,7 @@ class HomeScreen extends ConsumerWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .length
-                                            .toString() +
-                                        " Tasks",
+                                    "${tasks.where((element) => element.category == categories[index]).length} Tasks",
                                     style: const TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 12,
@@ -336,16 +335,17 @@ class HomeScreen extends ConsumerWidget {
                 const SliverToBoxAdapter(child: SizedBox(height: 20)),
                 SliverToBoxAdapter(
                   child: defaultPaddingWrapper(
-                    size: _size,
+                    size: size,
                     child: headingWrapper(
                       title: 'TODAY\'S TASKS',
-                      margin: 0.55 * _size.width,
+                      margin: 0.55 * size.width,
                     ),
                   ),
                 ),
                 SliverAnimatedList(
                   itemBuilder: (ctx, index, animator) {
                     return Slidable(
+                      key: Key(tasks[index].id),
                       startActionPane: ActionPane(
                         extentRatio: 0.5,
                         motion: const DrawerMotion(),
@@ -372,7 +372,6 @@ class HomeScreen extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      key: Key(tasks[index].id),
                       child: GestureDetector(
                         onTap: () => ref
                             .read(tasksNotifierProvider.notifier)
@@ -380,8 +379,18 @@ class HomeScreen extends ConsumerWidget {
                         child: Padding(
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: defaultPaddingWrapper(
-                              size: _size,
+                              size: size,
                               child: Container(
+                                constraints: BoxConstraints.tight(
+                                  Size(
+                                    size.width * 0.95,
+                                    60,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: Row(
                                   children: [
                                     const SizedBox(width: 20),
@@ -400,16 +409,6 @@ class HomeScreen extends ConsumerWidget {
                                           fontWeight: FontWeight.w600),
                                     ),
                                   ],
-                                ),
-                                constraints: BoxConstraints.tight(
-                                  Size(
-                                    _size.width * 0.95,
-                                    60,
-                                  ),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
                                 ),
                               ),
                             )),
@@ -435,33 +434,19 @@ class HomeScreen extends ConsumerWidget {
               child: const Icon(Icons.add),
             ),
           ),
-        );
-      },
-    );
-  }
-
-  defaultPaddingWrapper({required Widget child, required Size size}) {
-    return Padding(
-      padding:
-          EdgeInsets.only(left: 0.08 * size.width, right: 0.08 * size.width),
-      child: child,
-    );
-  }
-
-  headingWrapper({required String title, required double margin}) {
-    return Padding(
-      padding: EdgeInsets.only(right: margin),
-      child: FittedBox(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: const TextStyle(
-            color: lightGreyColor,
-            fontSize: 48,
-            fontWeight: FontWeight.w800,
-          ),
         ),
-      ),
+        Visibility(
+          visible: tasksState is TasksLoading,
+          child: Scaffold(
+            backgroundColor:
+                const Color.fromARGB(255, 32, 28, 28).withOpacity(0.5),
+            body: const Center(
+                child: SpinKitWave(
+              color: Colors.white,
+            )),
+          ),
+        )
+      ]),
     );
   }
 }
@@ -495,7 +480,7 @@ class DrawerTileWidget extends StatelessWidget {
     return ListTile(
       leading: Icon(item.icon, color: Colors.white),
       title: Text(item.title, style: const TextStyle(color: Colors.white)),
-      horizontalTitleGap: 5,
+      // horizontalTitleGap: 5,
       onTap: null,
     );
   }

@@ -58,6 +58,7 @@ class LoginScreen extends StatelessWidget {
                 RoundedButton(
                   text: "LOGIN",
                   press: () async {
+                    final navigator = Navigator.of(context);
                     if (_formKey.currentState != null &&
                         _formKey.currentState!.validate()) {
                       bool result = await AuthApiClient().login(
@@ -65,8 +66,7 @@ class LoginScreen extends StatelessWidget {
                         passwordController.text,
                       );
                       if (result) {
-                        Navigator.pushAndRemoveUntil(
-                          context,
+                        navigator.pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (ctx) => const HomeScreen(),
                           ),

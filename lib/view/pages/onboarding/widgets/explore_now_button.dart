@@ -21,7 +21,6 @@ class ExploreNowButton extends StatelessWidget {
           MaterialPageRoute(builder: (_) => const SignUpScreen()),
         );
       },
-      child: const Text('Explore Now!'),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),
@@ -35,6 +34,7 @@ class ExploreNowButton extends StatelessWidget {
         onSurface: kPrimaryColor,
         primary: kPrimaryColor.withOpacity(0.8),
       ),
+      child: const Text('Explore Now!'),
     );
   }
 }

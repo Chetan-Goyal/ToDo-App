@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/config/locator.dart';
 import 'package:todo_app/domain/auth_repository/auth_repository.dart';
@@ -26,14 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   initialiseData() async {
+    final navigator = Navigator.of(context);
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? token = await const FlutterSecureStorage().read(key: 'accessToken');
     bool? initialised = prefs.getBool('Initialised');
 
     if (initialised == null) {
-      return Navigator.pushReplacement(
-        context,
+      return navigator.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const OnboardingScreen(),
         ),
@@ -41,8 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
     }
 
     if (token == null) {
-      return Navigator.pushReplacement(
-        context,
+      return navigator.pushReplacement(
         MaterialPageRoute(
           builder: (ctx) => const SignUpScreen(),
         ),
@@ -52,13 +53,11 @@ class _SplashScreenState extends State<SplashScreen> {
     bool result = await locator.get<AuthRepository>().validateToken(token);
 
     if (result) {
-      Navigator.pushReplacement(
-        context,
+      navigator.pushReplacement(
         MaterialPageRoute(builder: (_) => const HomeScreen()),
       );
     } else {
-      Navigator.pushReplacement(
-        context,
+      navigator.pushReplacement(
         MaterialPageRoute(builder: (_) => const SignUpScreen()),
       );
     }
@@ -66,10 +65,34 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: CircularProgressIndicator(),
+    return Scaffold(
+      backgroundColor: Image.asset("assets/images/onboarding/bg.png").color,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/onboarding/bg.png"),
+            fit: BoxFit.cover,
+            filterQuality: FilterQuality.low,
+            opacity: 1,
+          ),
+        ),
+        child: Center(
+          child: Column(
+            children: [
+              const Spacer(),
+              Image.asset(
+                'assets/icons/logo.png',
+                width: MediaQuery.of(context).size.width * 0.5,
+              ),
+              const Spacer(flex: 2),
+              const SpinKitFadingCube(
+                color: Color.fromRGBO(254, 247, 232, 1),
+                duration: Duration(milliseconds: 3000),
+              ),
+              const Spacer(),
+            ],
+          ),
+        ),
       ),
     );
   }

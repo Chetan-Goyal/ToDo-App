@@ -11,10 +11,9 @@ class AuthApiClient implements AuthRepository {
   Future<bool> register(String username, String email, String password) async {
     Response response;
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().post(
         "$authEndpoint/signup",
         data: {"username": username, "email": email, "password": password},
-        options: Options(method: 'POST'),
       );
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
@@ -41,10 +40,9 @@ class AuthApiClient implements AuthRepository {
   Future<bool> login(String username, String password) async {
     Response response;
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().post(
         "$authEndpoint/signin",
         data: {"username": username, "password": password},
-        options: Options(method: 'POST'),
       );
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
@@ -78,10 +76,9 @@ class AuthApiClient implements AuthRepository {
   Future<bool> validateToken(String token) async {
     Response response;
     try {
-      response = await dioConfig().request(
+      response = await dioConfig().post(
         "$authEndpoint/validate",
         data: {"token": token},
-        options: Options(method: 'POST'),
       );
     } on DioError catch (e) {
       // The request was made and the server responded with a status code
