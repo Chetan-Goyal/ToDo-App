@@ -8,7 +8,7 @@ import 'package:todo_app/view/pages/authentication/widgets/already_have_an_accou
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_button.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_input_field.dart';
 import 'package:todo_app/view/pages/authentication/signup/widgets/rounded_password_field.dart';
-import 'package:todo_app/view/pages/home/home_screen_new_logic.dart';
+import 'package:todo_app/view/pages/home/home_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
