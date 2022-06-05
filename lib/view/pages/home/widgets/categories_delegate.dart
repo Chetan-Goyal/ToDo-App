@@ -18,7 +18,6 @@ class CategoriesDelegate extends SliverPersistentHeaderDelegate {
     if (overlapsContent) {
       return SizedBox(
         height: shrinkOffset < 70 ? 110 - shrinkOffset : 40,
-        // width: 20,
         child: ColoredBox(
           color: scaffoldColor,
           child: Padding(
