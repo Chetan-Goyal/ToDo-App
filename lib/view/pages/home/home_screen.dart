@@ -262,73 +262,80 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 110,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            constraints:
-                                BoxConstraints.tight(const Size(200, 110)),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                                left: 20,
-                                right: 10,
-                                bottom: 10,
+                SliverPersistentHeader(
+                  // floating: true,
+                  pinned: true,
+                  delegate: CategoriesDelegate(
+                    backgroundColor: Colors.white,
+                    categories: categories,
+                    child: SizedBox(
+                      height: 110,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              constraints:
+                                  BoxConstraints.tight(const Size(200, 110)),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${tasks.where((element) => element.category == categories[index]).length} Tasks",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: Color(0xFF9BA3C9)),
-                                  ),
-                                  const SizedBox(height: 7),
-                                  Text(
-                                    categories[index],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 21,
-                                        color: Color(0xFF333A63)),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  // Spacer(),
-                                  LinearProgressIndicator(
-                                    color: categoriesColors[categories[index]],
-                                    backgroundColor: const Color(0xFFE9EDFF),
-                                    value: tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .where(
-                                                (element) => element.completed)
-                                            .length /
-                                        tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .length,
-                                  ),
-                                  const Spacer(),
-                                ],
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 10,
+                                  left: 20,
+                                  right: 10,
+                                  bottom: 10,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${tasks.where((element) => element.category == categories[index]).length} Tasks",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Color(0xFF9BA3C9)),
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Text(
+                                      categories[index],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 21,
+                                          color: Color(0xFF333A63)),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // Spacer(),
+                                    LinearProgressIndicator(
+                                      color:
+                                          categoriesColors[categories[index]],
+                                      backgroundColor: const Color(0xFFE9EDFF),
+                                      value: tasks
+                                              .where((element) =>
+                                                  element.category ==
+                                                  categories[index])
+                                              .where((element) =>
+                                                  element.completed)
+                                              .length /
+                                          tasks
+                                              .where((element) =>
+                                                  element.category ==
+                                                  categories[index])
+                                              .length,
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      itemCount: categories.length,
+                          );
+                        },
+                        itemCount: categories.length,
+                      ),
                     ),
                   ),
                 ),
@@ -491,4 +498,57 @@ class SalesData {
 
   final double year;
   final double sales;
+}
+
+class CategoriesDelegate extends SliverPersistentHeaderDelegate {
+  final Color backgroundColor;
+  final Widget child;
+  final List<String> categories;
+
+  CategoriesDelegate({
+    required this.backgroundColor,
+    required this.child,
+    required this.categories,
+  });
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    print('shrinkOffset: $shrinkOffset');
+    print('overlapsContent: $overlapsContent');
+    if (overlapsContent) {
+      return SizedBox(
+        height: 110,
+        width: 20,
+        child: ColoredBox(
+          color: scaffoldColor,
+          child: DefaultTabController(
+            length: categories.length,
+            child: TabBar(tabs: [
+              for (int i = 0; i < categories.length; i++)
+                Tab(
+                  child: Text(
+                    categories[i],
+                    style: TextStyle(color: Colors.black),
+                  ),
+                )
+            ]),
+          ),
+        ),
+      );
+    }
+
+    return child;
+  }
+
+  @override
+  double get maxExtent => 110;
+
+  @override
+  double get minExtent => 110;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
+  }
 }
