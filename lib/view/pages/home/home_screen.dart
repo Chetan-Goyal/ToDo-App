@@ -12,6 +12,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:todo_app/view/pages/add_task/add_task_screen.dart';
 import 'package:todo_app/view_models/tasks_provider.dart';
 
+import 'widgets/categories_delegate.dart';
 import 'widgets/loading_tasks_screen.dart';
 import 'widgets/padding_wrappers.dart';
 
@@ -500,60 +501,4 @@ class SalesData {
 
   final double year;
   final double sales;
-}
-
-class CategoriesDelegate extends SliverPersistentHeaderDelegate {
-  final Color backgroundColor;
-  final Widget child;
-  final List<String> categories;
-
-  CategoriesDelegate({
-    required this.backgroundColor,
-    required this.child,
-    required this.categories,
-  });
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print('shrinkOffset: $shrinkOffset');
-    // print('overlapsContent: $overlapsContent');
-    if (overlapsContent) {
-      return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          height: shrinkOffset < 70 ? 110 - shrinkOffset : 70,
-          // width: 20,
-          child: ColoredBox(
-            color: scaffoldColor,
-            child: DefaultTabController(
-              length: categories.length,
-              child: TabBar(tabs: [
-                for (int i = 0; i < categories.length; i++)
-                  Tab(
-                    child: Text(
-                      categories[i],
-                      style: const TextStyle(color: Colors.black),
-                    ),
-                  )
-              ]),
-            ),
-          ),
-        ),
-      );
-    }
-
-    return child;
-  }
-
-  @override
-  double get maxExtent => 110;
-
-  @override
-  double get minExtent => 70;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
-    return true;
-  }
 }
