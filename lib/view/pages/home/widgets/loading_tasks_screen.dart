@@ -15,7 +15,8 @@ class LoadingTasksScreen extends StatelessWidget {
       body: Column(
         children: [
           AppBar(
-            backgroundColor: Colors.white.withOpacity(0),
+            backgroundColor: scaffoldColor,
+            elevation: 0,
             leading: InkWell(
               child: Icon(
                 Icons.menu,
@@ -117,44 +118,46 @@ class LoadingTasksScreen extends StatelessWidget {
               margin: 0.55 * size.width,
             ),
           ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemBuilder: (ctx, index) {
-              return Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: defaultPaddingWrapper(
-                  size: size,
-                  child: Container(
-                    constraints: BoxConstraints.tight(
-                      Size(
-                        size.width * 0.95,
-                        60,
+          Expanded(
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (ctx, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: defaultPaddingWrapper(
+                    size: size,
+                    child: Container(
+                      constraints: BoxConstraints.tight(
+                        Size(
+                          size.width * 0.95,
+                          60,
+                        ),
                       ),
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Shimmer.fromColors(
-                      baseColor: Colors.grey[400]!,
-                      highlightColor: Colors.grey[100]!,
-                      period: const Duration(seconds: 2),
-                      child: Container(
-                        width: 200,
-                        height: 50,
-                        decoration: ShapeDecoration(
-                          color: Colors.grey[400]!,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey[400]!,
+                        highlightColor: Colors.grey[100]!,
+                        period: const Duration(seconds: 2),
+                        child: Container(
+                          width: 200,
+                          height: 50,
+                          decoration: ShapeDecoration(
+                            color: Colors.grey[400]!,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
                           ),
                         ),
                       ),
                     ),
                   ),
-                ),
-              );
-            },
-            itemCount: 7,
+                );
+              },
+              itemCount: 3,
+            ),
           ),
         ],
       ),
