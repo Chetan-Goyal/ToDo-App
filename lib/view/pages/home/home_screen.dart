@@ -209,7 +209,9 @@ class HomeScreen extends ConsumerWidget {
               slivers: [
                 SliverAppBar(
                   pinned: true,
-                  backgroundColor: Colors.white.withOpacity(0),
+                  floating: true,
+                  backgroundColor: scaffoldColor,
+                  elevation: 0,
                   leading: InkWell(
                     onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
@@ -515,24 +517,27 @@ class CategoriesDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     print('shrinkOffset: $shrinkOffset');
-    print('overlapsContent: $overlapsContent');
+    // print('overlapsContent: $overlapsContent');
     if (overlapsContent) {
-      return SizedBox(
-        height: 110,
-        width: 20,
-        child: ColoredBox(
-          color: scaffoldColor,
-          child: DefaultTabController(
-            length: categories.length,
-            child: TabBar(tabs: [
-              for (int i = 0; i < categories.length; i++)
-                Tab(
-                  child: Text(
-                    categories[i],
-                    style: TextStyle(color: Colors.black),
-                  ),
-                )
-            ]),
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: SizedBox(
+          height: shrinkOffset < 70 ? 110 - shrinkOffset : 70,
+          // width: 20,
+          child: ColoredBox(
+            color: scaffoldColor,
+            child: DefaultTabController(
+              length: categories.length,
+              child: TabBar(tabs: [
+                for (int i = 0; i < categories.length; i++)
+                  Tab(
+                    child: Text(
+                      categories[i],
+                      style: const TextStyle(color: Colors.black),
+                    ),
+                  )
+              ]),
+            ),
           ),
         ),
       );
@@ -545,7 +550,7 @@ class CategoriesDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => 110;
 
   @override
-  double get minExtent => 110;
+  double get minExtent => 70;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
