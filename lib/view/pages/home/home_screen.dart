@@ -12,6 +12,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:todo_app/view/pages/add_task/add_task_screen.dart';
 import 'package:todo_app/view_models/tasks_provider.dart';
 
+import 'widgets/categories_delegate.dart';
 import 'widgets/loading_tasks_screen.dart';
 import 'widgets/padding_wrappers.dart';
 
@@ -209,7 +210,9 @@ class HomeScreen extends ConsumerWidget {
               slivers: [
                 SliverAppBar(
                   pinned: true,
-                  backgroundColor: Colors.white.withOpacity(0),
+                  floating: true,
+                  backgroundColor: scaffoldColor,
+                  elevation: 0,
                   leading: InkWell(
                     onTap: () => _drawerController.toggle!.call(),
                     child: Icon(
@@ -262,73 +265,80 @@ class HomeScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 110,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (ctx, index) {
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            constraints:
-                                BoxConstraints.tight(const Size(200, 110)),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                                left: 20,
-                                right: 10,
-                                bottom: 10,
+                SliverPersistentHeader(
+                  // floating: true,
+                  pinned: true,
+                  delegate: CategoriesDelegate(
+                    backgroundColor: Colors.white,
+                    categories: categories,
+                    child: SizedBox(
+                      height: 110,
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (ctx, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              constraints:
+                                  BoxConstraints.tight(const Size(200, 110)),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "${tasks.where((element) => element.category == categories[index]).length} Tasks",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 12,
-                                        color: Color(0xFF9BA3C9)),
-                                  ),
-                                  const SizedBox(height: 7),
-                                  Text(
-                                    categories[index],
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 21,
-                                        color: Color(0xFF333A63)),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  // Spacer(),
-                                  LinearProgressIndicator(
-                                    color: categoriesColors[categories[index]],
-                                    backgroundColor: const Color(0xFFE9EDFF),
-                                    value: tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .where(
-                                                (element) => element.completed)
-                                            .length /
-                                        tasks
-                                            .where((element) =>
-                                                element.category ==
-                                                categories[index])
-                                            .length,
-                                  ),
-                                  const Spacer(),
-                                ],
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 10,
+                                  left: 20,
+                                  right: 10,
+                                  bottom: 10,
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "${tasks.where((element) => element.category == categories[index]).length} Tasks",
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          color: Color(0xFF9BA3C9)),
+                                    ),
+                                    const SizedBox(height: 7),
+                                    Text(
+                                      categories[index],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 21,
+                                          color: Color(0xFF333A63)),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // Spacer(),
+                                    LinearProgressIndicator(
+                                      color:
+                                          categoriesColors[categories[index]],
+                                      backgroundColor: const Color(0xFFE9EDFF),
+                                      value: tasks
+                                              .where((element) =>
+                                                  element.category ==
+                                                  categories[index])
+                                              .where((element) =>
+                                                  element.completed)
+                                              .length /
+                                          tasks
+                                              .where((element) =>
+                                                  element.category ==
+                                                  categories[index])
+                                              .length,
+                                    ),
+                                    const Spacer(),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                      itemCount: categories.length,
+                          );
+                        },
+                        itemCount: categories.length,
+                      ),
                     ),
                   ),
                 ),
