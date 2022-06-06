@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/config/constants.dart';
 import 'package:todo_app/domain/task_repository/src/task_api_client.dart';
 import 'package:todo_app/view/pages/add_task/widgets/date_picker.dart';
 import 'package:todo_app/utils/date_utils.dart';
@@ -16,11 +17,13 @@ class AddTaskScreen extends StatefulWidget {
 
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final controller = TextEditingController();
+  final categoryController = TextEditingController();
 
   DateTime? dateTime;
   Color? color;
   bool isImportant = false;
   bool isReminderSet = false;
+  String? category;
 
   @override
   Widget build(BuildContext context) {
@@ -165,10 +168,91 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ToggleIconButton(
-                    icon: Icons.create_new_folder_outlined,
-                    callback: () {},
-                    isSelected: false,
+                  GestureDetector(
+                    onTap: () async {
+                      final result = await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: const Text("Category for your task"),
+                              shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0)),
+                              ),
+                              contentPadding: const EdgeInsets.only(top: 10.0),
+                              actionsAlignment: MainAxisAlignment.center,
+                              actions: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      category = categoryController.text;
+                                    });
+                                    Navigator.of(context).pop(true);
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.only(
+                                        top: 15.0, bottom: 15.0),
+                                    decoration: const BoxDecoration(
+                                      color: kPrimaryColor,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(30.0),
+                                      ),
+                                    ),
+                                    width: 150,
+                                    child: const Text(
+                                      "Update",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 17,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              content: Container(
+                                width: 300.0,
+                                margin: const EdgeInsets.all(20),
+                                child: TextFormField(
+                                  controller: categoryController,
+                                  decoration: const InputDecoration(
+                                    hintText: "Category",
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+
+                      if (result == null || !result) {
+                        setState(() {
+                          categoryController.text = category ?? '';
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey, width: 2),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(25.0),
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.create_new_folder_outlined,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                          if (category != null) ...[
+                            const SizedBox(width: 10),
+                            Text(category!),
+                          ]
+                        ],
+                      ),
+                    ),
                   ),
                   ToggleIconButton(
                     icon: Icons.flag_outlined,
@@ -191,7 +275,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   final navigator = Navigator.of(context);
                   bool result = await TaskApiClient().addTask(
                     name: controller.text,
-                    category: null,
+                    category: category,
                     color: color,
                     isImportant: isImportant,
                     isReminderSet: isReminderSet,
