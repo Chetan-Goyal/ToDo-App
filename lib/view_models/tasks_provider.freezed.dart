@@ -12,37 +12,7 @@ part of 'tasks_provider.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$TasksStateTearOff {
-  const _$TasksStateTearOff();
-
-  TasksInitial initial() {
-    return const TasksInitial();
-  }
-
-  TasksLoading loading([List<TaskModel> value = const []]) {
-    return TasksLoading(
-      value,
-    );
-  }
-
-  TasksError error(String message) {
-    return TasksError(
-      message,
-    );
-  }
-
-  TasksLoaded loaded(List<TaskModel> value) {
-    return TasksLoaded(
-      value,
-    );
-  }
-}
-
-/// @nodoc
-const $TasksState = _$TasksStateTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$TasksState {
@@ -115,21 +85,21 @@ class _$TasksStateCopyWithImpl<$Res> implements $TasksStateCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class $TasksInitialCopyWith<$Res> {
-  factory $TasksInitialCopyWith(
-          TasksInitial value, $Res Function(TasksInitial) then) =
-      _$TasksInitialCopyWithImpl<$Res>;
+abstract class _$$TasksInitialCopyWith<$Res> {
+  factory _$$TasksInitialCopyWith(
+          _$TasksInitial value, $Res Function(_$TasksInitial) then) =
+      __$$TasksInitialCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$TasksInitialCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
-    implements $TasksInitialCopyWith<$Res> {
-  _$TasksInitialCopyWithImpl(
-      TasksInitial _value, $Res Function(TasksInitial) _then)
-      : super(_value, (v) => _then(v as TasksInitial));
+class __$$TasksInitialCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
+    implements _$$TasksInitialCopyWith<$Res> {
+  __$$TasksInitialCopyWithImpl(
+      _$TasksInitial _value, $Res Function(_$TasksInitial) _then)
+      : super(_value, (v) => _then(v as _$TasksInitial));
 
   @override
-  TasksInitial get _value => super._value as TasksInitial;
+  _$TasksInitial get _value => super._value as _$TasksInitial;
 }
 
 /// @nodoc
@@ -145,7 +115,7 @@ class _$TasksInitial implements TasksInitial {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is TasksInitial);
+        (other.runtimeType == runtimeType && other is _$TasksInitial);
   }
 
   @override
@@ -231,30 +201,30 @@ abstract class TasksInitial implements TasksState {
 }
 
 /// @nodoc
-abstract class $TasksLoadingCopyWith<$Res> {
-  factory $TasksLoadingCopyWith(
-          TasksLoading value, $Res Function(TasksLoading) then) =
-      _$TasksLoadingCopyWithImpl<$Res>;
+abstract class _$$TasksLoadingCopyWith<$Res> {
+  factory _$$TasksLoadingCopyWith(
+          _$TasksLoading value, $Res Function(_$TasksLoading) then) =
+      __$$TasksLoadingCopyWithImpl<$Res>;
   $Res call({List<TaskModel> value});
 }
 
 /// @nodoc
-class _$TasksLoadingCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
-    implements $TasksLoadingCopyWith<$Res> {
-  _$TasksLoadingCopyWithImpl(
-      TasksLoading _value, $Res Function(TasksLoading) _then)
-      : super(_value, (v) => _then(v as TasksLoading));
+class __$$TasksLoadingCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
+    implements _$$TasksLoadingCopyWith<$Res> {
+  __$$TasksLoadingCopyWithImpl(
+      _$TasksLoading _value, $Res Function(_$TasksLoading) _then)
+      : super(_value, (v) => _then(v as _$TasksLoading));
 
   @override
-  TasksLoading get _value => super._value as TasksLoading;
+  _$TasksLoading get _value => super._value as _$TasksLoading;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(TasksLoading(
+    return _then(_$TasksLoading(
       value == freezed
-          ? _value.value
+          ? _value._value
           : value // ignore: cast_nullable_to_non_nullable
               as List<TaskModel>,
     ));
@@ -264,11 +234,16 @@ class _$TasksLoadingCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksLoading implements TasksLoading {
-  const _$TasksLoading([this.value = const []]);
+  const _$TasksLoading([final List<TaskModel> value = const []])
+      : _value = value;
 
-  @JsonKey()
+  final List<TaskModel> _value;
   @override
-  final List<TaskModel> value;
+  @JsonKey()
+  List<TaskModel> get value {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_value);
+  }
 
   @override
   String toString() {
@@ -279,18 +254,18 @@ class _$TasksLoading implements TasksLoading {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TasksLoading &&
-            const DeepCollectionEquality().equals(other.value, value));
+            other is _$TasksLoading &&
+            const DeepCollectionEquality().equals(other._value, _value));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_value));
 
   @JsonKey(ignore: true)
   @override
-  $TasksLoadingCopyWith<TasksLoading> get copyWith =>
-      _$TasksLoadingCopyWithImpl<TasksLoading>(this, _$identity);
+  _$$TasksLoadingCopyWith<_$TasksLoading> get copyWith =>
+      __$$TasksLoadingCopyWithImpl<_$TasksLoading>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -368,36 +343,37 @@ class _$TasksLoading implements TasksLoading {
 }
 
 abstract class TasksLoading implements TasksState {
-  const factory TasksLoading([List<TaskModel> value]) = _$TasksLoading;
+  const factory TasksLoading([final List<TaskModel> value]) = _$TasksLoading;
 
-  List<TaskModel> get value;
+  List<TaskModel> get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TasksLoadingCopyWith<TasksLoading> get copyWith =>
+  _$$TasksLoadingCopyWith<_$TasksLoading> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TasksErrorCopyWith<$Res> {
-  factory $TasksErrorCopyWith(
-          TasksError value, $Res Function(TasksError) then) =
-      _$TasksErrorCopyWithImpl<$Res>;
+abstract class _$$TasksErrorCopyWith<$Res> {
+  factory _$$TasksErrorCopyWith(
+          _$TasksError value, $Res Function(_$TasksError) then) =
+      __$$TasksErrorCopyWithImpl<$Res>;
   $Res call({String message});
 }
 
 /// @nodoc
-class _$TasksErrorCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
-    implements $TasksErrorCopyWith<$Res> {
-  _$TasksErrorCopyWithImpl(TasksError _value, $Res Function(TasksError) _then)
-      : super(_value, (v) => _then(v as TasksError));
+class __$$TasksErrorCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
+    implements _$$TasksErrorCopyWith<$Res> {
+  __$$TasksErrorCopyWithImpl(
+      _$TasksError _value, $Res Function(_$TasksError) _then)
+      : super(_value, (v) => _then(v as _$TasksError));
 
   @override
-  TasksError get _value => super._value as TasksError;
+  _$TasksError get _value => super._value as _$TasksError;
 
   @override
   $Res call({
     Object? message = freezed,
   }) {
-    return _then(TasksError(
+    return _then(_$TasksError(
       message == freezed
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -423,7 +399,7 @@ class _$TasksError implements TasksError {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TasksError &&
+            other is _$TasksError &&
             const DeepCollectionEquality().equals(other.message, message));
   }
 
@@ -433,8 +409,8 @@ class _$TasksError implements TasksError {
 
   @JsonKey(ignore: true)
   @override
-  $TasksErrorCopyWith<TasksError> get copyWith =>
-      _$TasksErrorCopyWithImpl<TasksError>(this, _$identity);
+  _$$TasksErrorCopyWith<_$TasksError> get copyWith =>
+      __$$TasksErrorCopyWithImpl<_$TasksError>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -512,39 +488,39 @@ class _$TasksError implements TasksError {
 }
 
 abstract class TasksError implements TasksState {
-  const factory TasksError(String message) = _$TasksError;
+  const factory TasksError(final String message) = _$TasksError;
 
-  String get message;
+  String get message => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TasksErrorCopyWith<TasksError> get copyWith =>
+  _$$TasksErrorCopyWith<_$TasksError> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TasksLoadedCopyWith<$Res> {
-  factory $TasksLoadedCopyWith(
-          TasksLoaded value, $Res Function(TasksLoaded) then) =
-      _$TasksLoadedCopyWithImpl<$Res>;
+abstract class _$$TasksLoadedCopyWith<$Res> {
+  factory _$$TasksLoadedCopyWith(
+          _$TasksLoaded value, $Res Function(_$TasksLoaded) then) =
+      __$$TasksLoadedCopyWithImpl<$Res>;
   $Res call({List<TaskModel> value});
 }
 
 /// @nodoc
-class _$TasksLoadedCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
-    implements $TasksLoadedCopyWith<$Res> {
-  _$TasksLoadedCopyWithImpl(
-      TasksLoaded _value, $Res Function(TasksLoaded) _then)
-      : super(_value, (v) => _then(v as TasksLoaded));
+class __$$TasksLoadedCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
+    implements _$$TasksLoadedCopyWith<$Res> {
+  __$$TasksLoadedCopyWithImpl(
+      _$TasksLoaded _value, $Res Function(_$TasksLoaded) _then)
+      : super(_value, (v) => _then(v as _$TasksLoaded));
 
   @override
-  TasksLoaded get _value => super._value as TasksLoaded;
+  _$TasksLoaded get _value => super._value as _$TasksLoaded;
 
   @override
   $Res call({
     Object? value = freezed,
   }) {
-    return _then(TasksLoaded(
+    return _then(_$TasksLoaded(
       value == freezed
-          ? _value.value
+          ? _value._value
           : value // ignore: cast_nullable_to_non_nullable
               as List<TaskModel>,
     ));
@@ -554,10 +530,14 @@ class _$TasksLoadedCopyWithImpl<$Res> extends _$TasksStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$TasksLoaded implements TasksLoaded {
-  const _$TasksLoaded(this.value);
+  const _$TasksLoaded(final List<TaskModel> value) : _value = value;
 
+  final List<TaskModel> _value;
   @override
-  final List<TaskModel> value;
+  List<TaskModel> get value {
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_value);
+  }
 
   @override
   String toString() {
@@ -568,18 +548,18 @@ class _$TasksLoaded implements TasksLoaded {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is TasksLoaded &&
-            const DeepCollectionEquality().equals(other.value, value));
+            other is _$TasksLoaded &&
+            const DeepCollectionEquality().equals(other._value, _value));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(value));
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_value));
 
   @JsonKey(ignore: true)
   @override
-  $TasksLoadedCopyWith<TasksLoaded> get copyWith =>
-      _$TasksLoadedCopyWithImpl<TasksLoaded>(this, _$identity);
+  _$$TasksLoadedCopyWith<_$TasksLoaded> get copyWith =>
+      __$$TasksLoadedCopyWithImpl<_$TasksLoaded>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -657,10 +637,10 @@ class _$TasksLoaded implements TasksLoaded {
 }
 
 abstract class TasksLoaded implements TasksState {
-  const factory TasksLoaded(List<TaskModel> value) = _$TasksLoaded;
+  const factory TasksLoaded(final List<TaskModel> value) = _$TasksLoaded;
 
-  List<TaskModel> get value;
+  List<TaskModel> get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TasksLoadedCopyWith<TasksLoaded> get copyWith =>
+  _$$TasksLoadedCopyWith<_$TasksLoaded> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -15,6 +15,7 @@ import 'package:todo_app/view_models/tasks_provider.dart';
 import 'widgets/categories_delegate.dart';
 import 'widgets/loading_tasks_screen.dart';
 import 'widgets/padding_wrappers.dart';
+import 'utils/hex_color_extension.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -390,36 +391,52 @@ class HomeScreen extends ConsumerWidget {
                             padding: const EdgeInsets.only(top: 10, bottom: 10),
                             child: defaultPaddingWrapper(
                               size: size,
-                              child: Container(
-                                constraints: BoxConstraints.tight(
-                                  Size(
-                                    size.width * 0.95,
-                                    60,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    constraints: BoxConstraints.tight(
+                                      Size(
+                                        size.width * 0.95,
+                                        60,
+                                      ),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        const SizedBox(width: 20),
+                                        Icon(
+                                          tasks[index].completed
+                                              ? Icons.check_circle
+                                              : Icons.circle_outlined,
+                                          color: tasks[index].color != null
+                                              ? HexColor.fromHex(
+                                                  tasks[index].color!)
+                                              : categoriesColors[
+                                                  tasks[index].category],
+                                        ),
+                                        const SizedBox(width: 25),
+                                        Text(
+                                          tasks[index].name,
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Row(
-                                  children: [
-                                    const SizedBox(width: 20),
-                                    Icon(
-                                      tasks[index].completed
-                                          ? Icons.check_circle
-                                          : Icons.circle_outlined,
-                                      color: categoriesColors[
-                                          tasks[index].category],
+                                  Visibility(
+                                    visible: tasks[index].isImportant,
+                                    child: Center(
+                                      widthFactor: 0,
+                                      heightFactor: 2.5,
+                                      child: const Icon(Icons.star,
+                                          color: Colors.grey),
                                     ),
-                                    const SizedBox(width: 25),
-                                    Text(
-                                      tasks[index].name,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             )),
                       ),
