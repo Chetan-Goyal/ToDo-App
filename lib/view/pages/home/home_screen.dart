@@ -429,11 +429,11 @@ class HomeScreen extends ConsumerWidget {
                                   ),
                                   Visibility(
                                     visible: tasks[index].isImportant,
-                                    child: Center(
+                                    child: const Center(
                                       widthFactor: 0,
                                       heightFactor: 2.5,
-                                      child: const Icon(Icons.star,
-                                          color: Colors.grey),
+                                      child:
+                                          Icon(Icons.star, color: Colors.grey),
                                     ),
                                   ),
                                 ],
