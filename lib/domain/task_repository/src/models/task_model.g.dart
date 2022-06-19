@@ -15,6 +15,9 @@ _$_TaskModel _$$_TaskModelFromJson(Map<String, dynamic> json) => _$_TaskModel(
       deadline: json['deadline'] == null
           ? null
           : DateTime.parse(json['deadline'] as String),
+      isImportant: json['isImportant'] as bool,
+      isReminderSet: json['isReminderSet'] as bool,
+      color: json['color'] as String?,
     );
 
 Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
@@ -25,4 +28,7 @@ Map<String, dynamic> _$$_TaskModelToJson(_$_TaskModel instance) =>
       'userId': instance.userId,
       'category': instance.category,
       'deadline': instance.deadline?.toIso8601String(),
+      'isImportant': instance.isImportant,
+      'isReminderSet': instance.isReminderSet,
+      'color': instance.color,
     };
