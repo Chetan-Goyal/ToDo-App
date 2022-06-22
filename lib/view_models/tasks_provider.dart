@@ -33,11 +33,12 @@ class TasksNotifier extends StateNotifier<TasksState> {
         Fluttertoast.showToast(msg: 'Please wait for pending task to complete');
         return;
       }
-      final tasks = (state as TasksLoaded).value;
+      List<TaskModel> tasks = List.from((state as TasksLoaded).value);
       state = TasksLoading(tasks);
 
       final result = await _taskRepository.completeTask(task.id);
       if (result) tasks.remove(task);
+
       state = TasksLoaded(tasks);
     } catch (e) {
       state = const TasksError('Error while loading Tasks');
@@ -50,7 +51,7 @@ class TasksNotifier extends StateNotifier<TasksState> {
         Fluttertoast.showToast(msg: 'Please wait for pending task to complete');
         return;
       }
-      final tasks = (state as TasksLoaded).value;
+      List<TaskModel> tasks = (state as TasksLoaded).value;
       state = TasksLoading(tasks);
 
       final result = await _taskRepository.deleteTask(task.id);
