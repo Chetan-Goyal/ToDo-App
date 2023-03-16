@@ -49,7 +49,7 @@ dev_dependencies:
   flutter_lints: ^2.0.1
   build_runner:
   json_serializable: ^6.1.4
-  icons_launcher: ^1.1.9
+  icons_launcher: ^2.0.0
 
 flutter_icons:
   image_path: 'assets/icons/logo.png'
