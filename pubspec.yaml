@@ -29,7 +29,7 @@ dependencies:
   introduction_screen: ^3.0.0
 
   # Utils
-  email_validator: ^2.0.1
+  email_validator: ^3.0.0
   freezed_annotation: ^2.0.3
   json_annotation: ^4.4.0
   intl: ^0.17.0
